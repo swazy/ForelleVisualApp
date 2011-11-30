@@ -2,7 +2,7 @@
 #include "cinder/gl/gl.h"
 
 #include "controller.h"
-
+#include "CinderArtnet.h"
 using namespace ci;
 using namespace ci::app;
 using namespace std;
@@ -18,18 +18,27 @@ class ForelleVisualAppApp : public AppBasic {
 	void draw();
 
     Controller controller;
-    int data[512];
+     uint8_t data[512]= {0};
+    vector<Controller>
+    CinderArtnet node;
     
 };
 
 void ForelleVisualAppApp::setup()
 {
+    node = CinderArtnet("Node1", "LongName", "10.0.2.2");
+    node.setNodeTypeAsServer();
+    node.setSubnetAdress(0);
+    node.enableDMXPortAsInputAndSetAdress(0, 1);
+    node.startNode();
     
     controller = Controller(0);
-    controller.addGroupWithLightsAndChannels(3,6);
-    controller.printUsedChannels();
-    controller.addGroupWithLightsAndChannels(3,6);
-    controller.printUsedChannels();
+    controller.setStartAdress(3);
+    controller.addGroupWithLightsAndChannels(4,3);
+    controller.addGroupWithLightsAndChannels(4,3);
+  //  controller.printUsedChannels();
+  //  controller.addGroupWithLightsAndChannels(3,6);
+  //  controller.printUsedChannels();
 
  //   controller.addGroupWithLightsAndChannels(3,3);
   //  controller.printUsedChannels();
@@ -50,6 +59,8 @@ void ForelleVisualAppApp::draw()
 {
 	// clear out the window with black
 	gl::clear( Color( 0, 0, 0 ) ); 
+    
+      node.sendDataAtPort(data, 0);
 }
 
 
