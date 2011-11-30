@@ -13,7 +13,7 @@ class ForelleVisualAppApp : public AppBasic {
 	void update();
 	void draw();
     
-    Group  group;
+    Group  group, group2;
     
     
 };
@@ -21,13 +21,19 @@ class ForelleVisualAppApp : public AppBasic {
 void ForelleVisualAppApp::setup()
 {
     
-    
-     Light light = Light();
-    light.setBlue(12);
-    
+        
     group =  Group();
-    group.addLight(&light);
-    
+    group.addLight(3);
+    group.addLight(3);
+    group.addLight(3);
+    group.addLight(3);
+    group2 =  Group();
+    group2.addLight(3);
+    group2.addLight(3);
+    group2.addLight(3);
+    group2.addLight(3);
+    group2.addLight(3);
+
 }
 
 void ForelleVisualAppApp::mouseDown( MouseEvent event )
