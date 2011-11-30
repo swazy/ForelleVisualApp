@@ -1,5 +1,6 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
+#include "Group.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -11,10 +12,22 @@ class ForelleVisualAppApp : public AppBasic {
 	void mouseDown( MouseEvent event );	
 	void update();
 	void draw();
+    
+    Group  group;
+    
+    
 };
 
 void ForelleVisualAppApp::setup()
 {
+    
+    
+     Light light = Light();
+    light.setBlue(12);
+    
+    group =  Group();
+    group.addLight(&light);
+    
 }
 
 void ForelleVisualAppApp::mouseDown( MouseEvent event )
@@ -29,6 +42,9 @@ void ForelleVisualAppApp::draw()
 {
 	// clear out the window with black
 	gl::clear( Color( 0, 0, 0 ) ); 
+    
+    int i = group.getLight(0)->getBlue();
+    console() << "blue = " << i << endl;
 }
 
 
