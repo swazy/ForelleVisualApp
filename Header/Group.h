@@ -17,14 +17,17 @@ class Group{
     
     vector<Light> lights;
     
-    int startAdress;
+    int adressOffset;
     
     public:
     Group();
-    void setStartAdress(int a);
-    int getStartAdress();
+    void setAdressOffset(int a);
+    int getAdressOffset();
     void addLight(int lightSize);
     Light* getLight(int pos);
+    int getUsedChannels();
+    vector<Light>* getLights();
+ 
     
     
     

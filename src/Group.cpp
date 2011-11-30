@@ -18,33 +18,28 @@ using namespace ci::app;
 
 Group::Group(){
     
+    adressOffset =0;
+    
 }
 
 
-void Group::setStartAdress(int a){
+void Group::setAdressOffset(int a){
     
     
-    startAdress = a;
+    adressOffset = a;
     
     
 }
-int Group::getStartAdress(){
+int Group::getAdressOffset(){
     
-    return startAdress;
+    return adressOffset;
     
 }
 void Group::addLight(int lightSize){
     
     Light l = Light(lightSize);
     
-    // calculate next free channels
-    //last pushed light adressoffset + amount of channels
-    int usedChannels;
-    if(lights.size() > 0){
-        usedChannels = lights[lights.size()-1].getAdressOffset() + lights[lights.size()-1].getAmountOfChannels();
-    }else
-        usedChannels = 0;
-    console()<< "UsedChannels  " << usedChannels <<endl;
+    int usedChannels = getUsedChannels();
     l.setAdressOffset(usedChannels);
     lights.push_back(l);
     
@@ -59,3 +54,21 @@ Light* Group::getLight(int pos){
            return &lights.at(pos);
     
 }
+
+int Group::getUsedChannels(){
+    
+    // calculate next free channels
+    //last pushed light adressoffset + amount of channels
+
+    if(lights.size() > 0)
+        return lights.back().getAdressOffset() + lights.back().getAmountOfChannels();
+    else
+        return 0;
+    
+    
+}
+vector<Light>* Group::getLights(){
+    
+    return &lights;
+}
+
