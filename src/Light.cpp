@@ -18,7 +18,7 @@ int Light::amount = 0;
 
 Light::Light(int size){
     
-    channels.assign(size, 0);
+    channels.assign(size, 200);
     adressOffset = 0;
     amount++;
 

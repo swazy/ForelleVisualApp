@@ -16,8 +16,8 @@ private:
     artnet_node node;
     
 public: 
-    
-    CinderArtnet( const char  name, const char longName, const char ip_adress);    
+    CinderArtnet();
+    CinderArtnet( string  name, string longName, string ip_adress);    
     void setNodeTypeAsServer();
     void setSubnetAdress(int subnet);
     void enableDMXPortAsInputAndSetAdress(int port, int adress);

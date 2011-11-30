@@ -12,14 +12,17 @@
 #include "cinder/app/AppBasic.h"
 using namespace ci::app;
 
+CinderArtnet::CinderArtnet(){
 
-CinderArtnet::CinderArtnet( const char  name, const char  longName, const char ip_adress)   
+}
+
+CinderArtnet::CinderArtnet(string  name, string  longName, string ip_adress)   
 {       
     //Address to send from
-    node = artnet_new(&ip_adress, 1);
+    node = artnet_new(ip_adress.c_str(), 1);
     // Set name of the node
-    artnet_set_long_name(node, &longName);
-    artnet_set_short_name(node, &name);
+    artnet_set_long_name(node, longName.c_str());
+    artnet_set_short_name(node, name.c_str());
 
 }
 
