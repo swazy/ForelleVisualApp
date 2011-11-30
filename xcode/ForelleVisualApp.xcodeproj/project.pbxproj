@@ -19,6 +19,18 @@
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		53E3CDFC0E86099300238D2B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E3CDFB0E86099300238D2B /* Carbon.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		FFAA12631486A64E00B81814 /* artnet.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12501486A64E00B81814 /* artnet.Plo */; };
+		FFAA12641486A64E00B81814 /* misc.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12511486A64E00B81814 /* misc.Plo */; };
+		FFAA12651486A64E00B81814 /* network.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12521486A64E00B81814 /* network.Plo */; };
+		FFAA12661486A64E00B81814 /* receive.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12531486A64E00B81814 /* receive.Plo */; };
+		FFAA12671486A64E00B81814 /* tod.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12541486A64E00B81814 /* tod.Plo */; };
+		FFAA12681486A64E00B81814 /* transmit.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12551486A64E00B81814 /* transmit.Plo */; };
+		FFAA12691486A64E00B81814 /* artnet.c in Sources */ = {isa = PBXBuildFile; fileRef = FFAA12561486A64E00B81814 /* artnet.c */; };
+		FFAA126A1486A64E00B81814 /* misc.c in Sources */ = {isa = PBXBuildFile; fileRef = FFAA125A1486A64E00B81814 /* misc.c */; };
+		FFAA126B1486A64E00B81814 /* network.c in Sources */ = {isa = PBXBuildFile; fileRef = FFAA125C1486A64E00B81814 /* network.c */; };
+		FFAA126C1486A64E00B81814 /* receive.c in Sources */ = {isa = PBXBuildFile; fileRef = FFAA125F1486A64E00B81814 /* receive.c */; };
+		FFAA126D1486A64E00B81814 /* tod.c in Sources */ = {isa = PBXBuildFile; fileRef = FFAA12601486A64E00B81814 /* tod.c */; };
+		FFAA126E1486A64E00B81814 /* transmit.c in Sources */ = {isa = PBXBuildFile; fileRef = FFAA12621486A64E00B81814 /* transmit.c */; };
 		FFB89F2514865D590029BF84 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB89F2214865D590029BF84 /* Controller.cpp */; };
 		FFB89F2614865D590029BF84 /* Group.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB89F2314865D590029BF84 /* Group.cpp */; };
 		FFB89F2714865D590029BF84 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB89F2414865D590029BF84 /* Light.cpp */; };
@@ -43,6 +55,25 @@
 		53E3CDFB0E86099300238D2B /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* ForelleVisualApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ForelleVisualApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFAA12501486A64E00B81814 /* artnet.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artnet.Plo; sourceTree = "<group>"; };
+		FFAA12511486A64E00B81814 /* misc.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = misc.Plo; sourceTree = "<group>"; };
+		FFAA12521486A64E00B81814 /* network.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = network.Plo; sourceTree = "<group>"; };
+		FFAA12531486A64E00B81814 /* receive.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = receive.Plo; sourceTree = "<group>"; };
+		FFAA12541486A64E00B81814 /* tod.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tod.Plo; sourceTree = "<group>"; };
+		FFAA12551486A64E00B81814 /* transmit.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = transmit.Plo; sourceTree = "<group>"; };
+		FFAA12561486A64E00B81814 /* artnet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = artnet.c; sourceTree = "<group>"; };
+		FFAA12571486A64E00B81814 /* artnet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = artnet.h; sourceTree = "<group>"; };
+		FFAA12581486A64E00B81814 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		FFAA12591486A64E00B81814 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		FFAA125A1486A64E00B81814 /* misc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = misc.c; sourceTree = "<group>"; };
+		FFAA125B1486A64E00B81814 /* misc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = misc.h; sourceTree = "<group>"; };
+		FFAA125C1486A64E00B81814 /* network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = network.c; sourceTree = "<group>"; };
+		FFAA125D1486A64E00B81814 /* packets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = packets.h; sourceTree = "<group>"; };
+		FFAA125E1486A64E00B81814 /* private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = private.h; sourceTree = "<group>"; };
+		FFAA125F1486A64E00B81814 /* receive.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = receive.c; sourceTree = "<group>"; };
+		FFAA12601486A64E00B81814 /* tod.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tod.c; sourceTree = "<group>"; };
+		FFAA12611486A64E00B81814 /* tod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tod.h; sourceTree = "<group>"; };
+		FFAA12621486A64E00B81814 /* transmit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transmit.c; sourceTree = "<group>"; };
 		FFB89F1E14865D500029BF84 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Controller.h; path = ../Header/Controller.h; sourceTree = "<group>"; };
 		FFB89F1F14865D500029BF84 /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Group.h; path = ../Header/Group.h; sourceTree = "<group>"; };
 		FFB89F2014865D500029BF84 /* Light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Light.h; path = ../Header/Light.h; sourceTree = "<group>"; };
@@ -121,6 +152,7 @@
 		29B97314FDCFA39411CA2CEA /* ForelleVisualApp */ = {
 			isa = PBXGroup;
 			children = (
+				FFAA124E1486A64E00B81814 /* artnet */,
 				29B97315FDCFA39411CA2CEA /* Headers */,
 				080E96DDFE201D6D7F000001 /* Source */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -157,6 +189,40 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FFAA124E1486A64E00B81814 /* artnet */ = {
+			isa = PBXGroup;
+			children = (
+				FFAA124F1486A64E00B81814 /* .deps */,
+				FFAA12561486A64E00B81814 /* artnet.c */,
+				FFAA12571486A64E00B81814 /* artnet.h */,
+				FFAA12581486A64E00B81814 /* common.h */,
+				FFAA12591486A64E00B81814 /* config.h */,
+				FFAA125A1486A64E00B81814 /* misc.c */,
+				FFAA125B1486A64E00B81814 /* misc.h */,
+				FFAA125C1486A64E00B81814 /* network.c */,
+				FFAA125D1486A64E00B81814 /* packets.h */,
+				FFAA125E1486A64E00B81814 /* private.h */,
+				FFAA125F1486A64E00B81814 /* receive.c */,
+				FFAA12601486A64E00B81814 /* tod.c */,
+				FFAA12611486A64E00B81814 /* tod.h */,
+				FFAA12621486A64E00B81814 /* transmit.c */,
+			);
+			path = artnet;
+			sourceTree = "<group>";
+		};
+		FFAA124F1486A64E00B81814 /* .deps */ = {
+			isa = PBXGroup;
+			children = (
+				FFAA12501486A64E00B81814 /* artnet.Plo */,
+				FFAA12511486A64E00B81814 /* misc.Plo */,
+				FFAA12521486A64E00B81814 /* network.Plo */,
+				FFAA12531486A64E00B81814 /* receive.Plo */,
+				FFAA12541486A64E00B81814 /* tod.Plo */,
+				FFAA12551486A64E00B81814 /* transmit.Plo */,
+			);
+			path = .deps;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,6 +276,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				00CCAF15116A9FEE008396D5 /* CinderApp.icns in Resources */,
+				FFAA12631486A64E00B81814 /* artnet.Plo in Resources */,
+				FFAA12641486A64E00B81814 /* misc.Plo in Resources */,
+				FFAA12651486A64E00B81814 /* network.Plo in Resources */,
+				FFAA12661486A64E00B81814 /* receive.Plo in Resources */,
+				FFAA12671486A64E00B81814 /* tod.Plo in Resources */,
+				FFAA12681486A64E00B81814 /* transmit.Plo in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +296,12 @@
 				FFB89F2514865D590029BF84 /* Controller.cpp in Sources */,
 				FFB89F2614865D590029BF84 /* Group.cpp in Sources */,
 				FFB89F2714865D590029BF84 /* Light.cpp in Sources */,
+				FFAA12691486A64E00B81814 /* artnet.c in Sources */,
+				FFAA126A1486A64E00B81814 /* misc.c in Sources */,
+				FFAA126B1486A64E00B81814 /* network.c in Sources */,
+				FFAA126C1486A64E00B81814 /* receive.c in Sources */,
+				FFAA126D1486A64E00B81814 /* tod.c in Sources */,
+				FFAA126E1486A64E00B81814 /* transmit.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +320,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ForelleVisualApp_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"$(CINDER_PATH)/artnet\"/**",
+					"\"$(CINDER_PATH)/boost\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
@@ -264,6 +346,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ForelleVisualApp_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"$(CINDER_PATH)/artnet\"/**",
+					"\"$(CINDER_PATH)/boost\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
@@ -279,6 +365,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
 				CINDER_PATH = ../../cinder_0.8.2_mac;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					HAVE_CONFIG_H,
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
@@ -294,6 +384,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
 				CINDER_PATH = ../../cinder_0.8.2_mac;
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
