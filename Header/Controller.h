@@ -14,18 +14,24 @@ class Controller{
 private:
     
     int universe;
-    int controllerAdress;
+    int startAdress;;
     std::vector<Group> groups;
+    
     
     
 public:
     Controller();
     Controller(int u);
     Group* getGroupAt(int pos);
-    void   addGroup(Group *g);
+    void addGroup();
+    void addGroupWithLightsAndChannels(int lights,int channels);
     int getUniverse();
     void setUniverse(int u);
-    
-    
+    void printUsedChannels();
+    void setStartAdress(int a);
+    int getStartAdress();
+    int getUsedChannels();
+    void getData(int *data);
+
     
 }; 
