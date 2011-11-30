@@ -31,6 +31,7 @@
 		FFAA126C1486A64E00B81814 /* receive.c in Sources */ = {isa = PBXBuildFile; fileRef = FFAA125F1486A64E00B81814 /* receive.c */; };
 		FFAA126D1486A64E00B81814 /* tod.c in Sources */ = {isa = PBXBuildFile; fileRef = FFAA12601486A64E00B81814 /* tod.c */; };
 		FFAA126E1486A64E00B81814 /* transmit.c in Sources */ = {isa = PBXBuildFile; fileRef = FFAA12621486A64E00B81814 /* transmit.c */; };
+		FFAA12711486A87100B81814 /* CinderArtnet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFAA12701486A87100B81814 /* CinderArtnet.cpp */; };
 		FFB89F2514865D590029BF84 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB89F2214865D590029BF84 /* Controller.cpp */; };
 		FFB89F2614865D590029BF84 /* Group.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB89F2314865D590029BF84 /* Group.cpp */; };
 		FFB89F2714865D590029BF84 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB89F2414865D590029BF84 /* Light.cpp */; };
@@ -74,6 +75,8 @@
 		FFAA12601486A64E00B81814 /* tod.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tod.c; sourceTree = "<group>"; };
 		FFAA12611486A64E00B81814 /* tod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tod.h; sourceTree = "<group>"; };
 		FFAA12621486A64E00B81814 /* transmit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transmit.c; sourceTree = "<group>"; };
+		FFAA12701486A87100B81814 /* CinderArtnet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CinderArtnet.cpp; sourceTree = "<group>"; };
+		FFAA12721486A87F00B81814 /* CinderArtnet.h */ = {isa = PBXFileReference; fileEncoding = 4; path = CinderArtnet.h; sourceTree = "<group>"; };
 		FFB89F1E14865D500029BF84 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Controller.h; path = ../Header/Controller.h; sourceTree = "<group>"; };
 		FFB89F1F14865D500029BF84 /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Group.h; path = ../Header/Group.h; sourceTree = "<group>"; };
 		FFB89F2014865D500029BF84 /* Light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Light.h; path = ../Header/Light.h; sourceTree = "<group>"; };
@@ -110,6 +113,7 @@
 				FFB89F2314865D590029BF84 /* Group.cpp */,
 				FFB89F2414865D590029BF84 /* Light.cpp */,
 				00BAE6590E7ED9C10018A608 /* ForelleVisualAppApp.cpp */,
+				FFAA12701486A87100B81814 /* CinderArtnet.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -169,6 +173,7 @@
 				FFB89F1F14865D500029BF84 /* Group.h */,
 				FFB89F2014865D500029BF84 /* Light.h */,
 				32CA4F630368D1EE00C91783 /* ForelleVisualApp_Prefix.pch */,
+				FFAA12721486A87F00B81814 /* CinderArtnet.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -302,6 +307,7 @@
 				FFAA126C1486A64E00B81814 /* receive.c in Sources */,
 				FFAA126D1486A64E00B81814 /* tod.c in Sources */,
 				FFAA126E1486A64E00B81814 /* transmit.c in Sources */,
+				FFAA12711486A87100B81814 /* CinderArtnet.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,7 +370,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
-				CINDER_PATH = ../../cinder_0.8.2_mac;
+				CINDER_PATH = /Developer/cinder;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEBUG,
 					HAVE_CONFIG_H,
@@ -373,8 +379,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
+				SDKROOT = macosx10.7;
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/artnet\" \"$(CINDER_PATH)/include\" ../include";
 			};
 			name = Debug;
 		};
@@ -383,14 +389,14 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
-				CINDER_PATH = ../../cinder_0.8.2_mac;
+				CINDER_PATH = /Developer/cinder;
 				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
+				SDKROOT = macosx10.7;
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/artnet\" \"$(CINDER_PATH)/include\" ../include";
 			};
 			name = Release;
 		};

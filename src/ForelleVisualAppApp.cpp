@@ -6,7 +6,6 @@
 using namespace ci;
 using namespace ci::app;
 using namespace std;
-
 namespace Const{
     const int MAX_DMX_CHANNELS = 512;
 };
@@ -20,7 +19,6 @@ class ForelleVisualAppApp : public AppBasic {
 
     Controller controller;
     int data[512];
-    
     
 };
 
