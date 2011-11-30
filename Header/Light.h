@@ -32,7 +32,7 @@ public:
     int  getAmountOfChannels();
     void setAdressOffset(int o);
     int getAdressOffset();
-    int getChannelAt(int pos);
+    int getValueAt(int pos);
     void setPos(Vec3i pos);
     Vec3i getPos();
     

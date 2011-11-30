@@ -19,6 +19,7 @@ int Light::amount = 0;
 Light::Light(int size){
     
     channels.assign(size, 0);
+    adressOffset = 0;
     amount++;
 
     //pos = Vec3i(
@@ -27,6 +28,7 @@ Light::Light(){
     
     // default r,g,b
     channels.assign(3, 0);
+    adressOffset = 0;
     amount++;
     //pos = Vec3i(
 }
@@ -67,10 +69,10 @@ void Light::setBlue(int b){
     channels[0] = r;
 }
 
-int Light::getChannelAt(int pos){
+int Light::getValueAt(int pos){
     
-    if(pos < 0 || pos >= channels.size() -1){
-       console()<< "Channelposition out of Bounds at  " <<typeid( *this ).name() << " number:  " << amount <<endl;
+    if(pos < 0 || pos >= channels.size()){
+       console()<< "Channelposition out of Bounds. Pos: "<<pos  << " At Light number " << amount <<endl;
     return -1;
     }else
         return channels[pos];
