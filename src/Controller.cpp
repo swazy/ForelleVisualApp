@@ -94,7 +94,7 @@ int Controller::getUsedChannels(){
  
 }
 
-void Controller::getData(int *data){
+void Controller::getData( uint8_t *data){
 
     vector<Group>::iterator it;
     
@@ -110,11 +110,11 @@ void Controller::getData(int *data){
                     
                 // calculate real channel 
                 // first with channels in the light = i, + the offset of the light + the offset oh the group
-                int channel = i + it2->getAdressOffset() + it->getAdressOffset();
+                int channel = i + it2->getAdressOffset() + it->getAdressOffset() + getStartAdress();
                 
                 console() << channel << endl;
                 int value = it2->getValueAt(i);
-                
+                console() << "Value  " <<value << endl; 
                 if(value != -1){
                     
                     data[channel] = value;

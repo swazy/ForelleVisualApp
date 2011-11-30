@@ -16,6 +16,7 @@ private:
     int universe;
     int startAdress;;
     std::vector<Group> groups;
+    string name;
     
     
     
@@ -31,7 +32,7 @@ public:
     void setStartAdress(int a);
     int getStartAdress();
     int getUsedChannels();
-    void getData(int *data);
+    void getData( uint8_t *data);
 
     
 }; 
