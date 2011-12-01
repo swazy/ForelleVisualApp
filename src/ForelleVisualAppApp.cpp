@@ -1,8 +1,8 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
 
-#include "Cluster.h"
 #include "CinderArtnet.h"
+#include "XmlParser.h"
 using namespace ci;
 using namespace ci::app;
 using namespace std;
@@ -20,7 +20,7 @@ class ForelleVisualAppApp : public AppBasic {
     Cluster cluster;
      uint8_t data[512]= {0};
     CinderArtnet node;
-    
+    XmlParser parser;
 };
 
 void ForelleVisualAppApp::setup()
@@ -44,6 +44,8 @@ void ForelleVisualAppApp::setup()
     
     cluster.getData(data);
 
+    vector<Cluster> temp;
+    parser.loadTemplateClusterWithUniverse(temp, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight.xml");
 }
 
 void ForelleVisualAppApp::mouseDown( MouseEvent event )

@@ -9,6 +9,7 @@
 #include <iostream>
 #include "XmlParser.h"
 
+using namespace ci::app;
 
 
 XmlParser::XmlParser(){
@@ -27,15 +28,9 @@ void XmlParser::loadTemplateClusterWithUniverse(vector<Cluster> &destination, in
     
     for( XmlTree::ConstIter itemIter = xml.begin("/cluster/group"); itemIter != xml.end(); ++itemIter ) {
       
-        console() << "Tag: " << child->getTag() << "  Value: " << child->getValue() << endl;
+        console() << "Name: " << itemIter->getAttributeValue<string>("name") << endl;
 
-        XmlTree  = doc.getChild( "library/album" );
-        for( XmlTree::Iter child = firstAlbum.begin(); child != firstAlbum.end(); ++child )
-            console() << "Tag: " << child->getTag() << "  Value: " << child->getValue() << endl;
-        
-        
-        
-        
+    }
 //        
 //        string titleLine( itemIter->getChild( "title" ).getValue() );
 //		size_t firstComma = titleLine.find( ',' );
@@ -47,6 +42,6 @@ void XmlParser::loadTemplateClusterWithUniverse(vector<Cluster> &destination, in
 //		locationString >> locationVector.x >> locationVector.y;
 //		
 //		mEarth.addQuake( locationVector.x, locationVector.y, magnitude, title );		
-	}
 
-       }
+
+}
