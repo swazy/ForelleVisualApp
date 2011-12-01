@@ -1,0 +1,30 @@
+<cluster name="Spot Row" univers="", address="", x="",y="",z="">
+	<group name="Dimmerpack", address="", xo="", yo="", zo="">
+		<light name="Spot 01", address="", xo="", yo="", zo="">
+			<channel name="White", source="A", xo="", yo="", zo=""></channel>
+		</light>
+		<light name="Spot 02", address="", xo="4", yo="", zo="">
+			<channel name="White", source="A", xo="", yo="", zo=""></channel>
+		</light>
+		<light name="Spot 03", address="", xo="8", yo="", zo="">
+			<channel name="White", source="A", xo="", yo="", zo=""></channel>
+		</light>
+		<light name="Spot 04", address="", xo="16", yo="", zo="">
+			<channel name="White", source="A", xo="", yo="", zo=""></channel>
+		</light>
+	</group>
+	<group name="Dimmerpack", address="", xo="20", yo="", zo="">
+		<light name="Spot 01", address="", xo="", yo="", zo="">
+			<channel name="White", source="A", xo="", yo="", zo=""></channel>
+		</light>
+		<light name="Spot 02", address="", xo="4", yo="", zo="">
+			<channel name="White", source="A", xo="", yo="", zo=""></channel>
+		</light>
+		<light name="Spot 03", address="", xo="8", yo="", zo="">
+			<channel name="White", source="A", xo="", yo="", zo=""></channel>
+		</light>
+		<light name="Spot 04", address="", xo="16", yo="", zo="">
+			<channel name="White", source="A", xo="", yo="", zo=""></channel>
+		</light>
+	</group>
+</cluster>

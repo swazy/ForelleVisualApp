@@ -1,0 +1,6 @@
+<cluster name="Cluster">
+	<group name="Eurolight">
+		<light name="Light 01">
+        </light>
+    </group>
+</cluster>
