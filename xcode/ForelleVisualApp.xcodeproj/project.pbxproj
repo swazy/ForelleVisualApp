@@ -19,6 +19,7 @@
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		53E3CDFC0E86099300238D2B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E3CDFB0E86099300238D2B /* Carbon.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		FF66AE381487C5D400A47EBC /* LightChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF66AE371487C5D400A47EBC /* LightChannel.cpp */; };
 		FFAA12631486A64E00B81814 /* artnet.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12501486A64E00B81814 /* artnet.Plo */; };
 		FFAA12641486A64E00B81814 /* misc.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12511486A64E00B81814 /* misc.Plo */; };
 		FFAA12651486A64E00B81814 /* network.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12521486A64E00B81814 /* network.Plo */; };
@@ -32,7 +33,7 @@
 		FFAA126D1486A64E00B81814 /* tod.c in Sources */ = {isa = PBXBuildFile; fileRef = FFAA12601486A64E00B81814 /* tod.c */; };
 		FFAA126E1486A64E00B81814 /* transmit.c in Sources */ = {isa = PBXBuildFile; fileRef = FFAA12621486A64E00B81814 /* transmit.c */; };
 		FFAA12711486A87100B81814 /* CinderArtnet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFAA12701486A87100B81814 /* CinderArtnet.cpp */; };
-		FFB89F2514865D590029BF84 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB89F2214865D590029BF84 /* Controller.cpp */; };
+		FFB89F2514865D590029BF84 /* Cluster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB89F2214865D590029BF84 /* Cluster.cpp */; };
 		FFB89F2614865D590029BF84 /* Group.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB89F2314865D590029BF84 /* Group.cpp */; };
 		FFB89F2714865D590029BF84 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB89F2414865D590029BF84 /* Light.cpp */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,8 @@
 		53E3CDFB0E86099300238D2B /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* ForelleVisualApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ForelleVisualApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF66AE361487C43500A47EBC /* LightChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; name = LightChannel.h; path = ../Header/LightChannel.h; sourceTree = "<group>"; };
+		FF66AE371487C5D400A47EBC /* LightChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LightChannel.cpp; path = ../src/LightChannel.cpp; sourceTree = "<group>"; };
 		FFAA12501486A64E00B81814 /* artnet.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artnet.Plo; sourceTree = "<group>"; };
 		FFAA12511486A64E00B81814 /* misc.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = misc.Plo; sourceTree = "<group>"; };
 		FFAA12521486A64E00B81814 /* network.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = network.Plo; sourceTree = "<group>"; };
@@ -76,11 +79,11 @@
 		FFAA12611486A64E00B81814 /* tod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tod.h; sourceTree = "<group>"; };
 		FFAA12621486A64E00B81814 /* transmit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transmit.c; sourceTree = "<group>"; };
 		FFAA12701486A87100B81814 /* CinderArtnet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CinderArtnet.cpp; sourceTree = "<group>"; };
-		FFAA12721486A87F00B81814 /* CinderArtnet.h */ = {isa = PBXFileReference; fileEncoding = 4; path = CinderArtnet.h; sourceTree = "<group>"; };
-		FFB89F1E14865D500029BF84 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Controller.h; path = ../Header/Controller.h; sourceTree = "<group>"; };
+		FFAA12721486A87F00B81814 /* CinderArtnet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderArtnet.h; sourceTree = "<group>"; };
+		FFB89F1E14865D500029BF84 /* Cluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cluster.h; path = ../Header/Cluster.h; sourceTree = "<group>"; };
 		FFB89F1F14865D500029BF84 /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Group.h; path = ../Header/Group.h; sourceTree = "<group>"; };
 		FFB89F2014865D500029BF84 /* Light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Light.h; path = ../Header/Light.h; sourceTree = "<group>"; };
-		FFB89F2214865D590029BF84 /* Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Controller.cpp; path = ../src/Controller.cpp; sourceTree = "<group>"; };
+		FFB89F2214865D590029BF84 /* Cluster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cluster.cpp; path = ../src/Cluster.cpp; sourceTree = "<group>"; };
 		FFB89F2314865D590029BF84 /* Group.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Group.cpp; path = ../src/Group.cpp; sourceTree = "<group>"; };
 		FFB89F2414865D590029BF84 /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Light.cpp; path = ../src/Light.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,11 +112,12 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				FFB89F2214865D590029BF84 /* Controller.cpp */,
+				FFB89F2214865D590029BF84 /* Cluster.cpp */,
 				FFB89F2314865D590029BF84 /* Group.cpp */,
 				FFB89F2414865D590029BF84 /* Light.cpp */,
 				00BAE6590E7ED9C10018A608 /* ForelleVisualAppApp.cpp */,
 				FFAA12701486A87100B81814 /* CinderArtnet.cpp */,
+				FF66AE371487C5D400A47EBC /* LightChannel.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -169,11 +173,12 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				FFB89F1E14865D500029BF84 /* Controller.h */,
+				FFB89F1E14865D500029BF84 /* Cluster.h */,
 				FFB89F1F14865D500029BF84 /* Group.h */,
 				FFB89F2014865D500029BF84 /* Light.h */,
 				32CA4F630368D1EE00C91783 /* ForelleVisualApp_Prefix.pch */,
 				FFAA12721486A87F00B81814 /* CinderArtnet.h */,
+				FF66AE361487C43500A47EBC /* LightChannel.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -298,7 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00BAE65A0E7ED9C10018A608 /* ForelleVisualAppApp.cpp in Sources */,
-				FFB89F2514865D590029BF84 /* Controller.cpp in Sources */,
+				FFB89F2514865D590029BF84 /* Cluster.cpp in Sources */,
 				FFB89F2614865D590029BF84 /* Group.cpp in Sources */,
 				FFB89F2714865D590029BF84 /* Light.cpp in Sources */,
 				FFAA12691486A64E00B81814 /* artnet.c in Sources */,
@@ -308,6 +313,7 @@
 				FFAA126D1486A64E00B81814 /* tod.c in Sources */,
 				FFAA126E1486A64E00B81814 /* transmit.c in Sources */,
 				FFAA12711486A87100B81814 /* CinderArtnet.cpp in Sources */,
+				FF66AE381487C5D400A47EBC /* LightChannel.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

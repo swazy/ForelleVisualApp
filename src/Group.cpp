@@ -35,9 +35,9 @@ int Group::getAdressOffset(){
     return adressOffset;
     
 }
-void Group::addLight(int lightSize){
+void Group::addLightWithChannels(const char * channels){
     
-    Light l = Light(lightSize);
+    Light l = Light(channels);
     
     int usedChannels = getUsedChannels();
     l.setAdressOffset(usedChannels);

@@ -1,7 +1,7 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
 
-#include "controller.h"
+#include "Cluster.h"
 #include "CinderArtnet.h"
 using namespace ci;
 using namespace ci::app;
@@ -17,9 +17,8 @@ class ForelleVisualAppApp : public AppBasic {
 	void update();
 	void draw();
 
-    Controller controller;
+    Cluster cluster;
      uint8_t data[512]= {0};
-    vector<Controller>
     CinderArtnet node;
     
 };
@@ -32,18 +31,18 @@ void ForelleVisualAppApp::setup()
     node.enableDMXPortAsInputAndSetAdress(0, 1);
     node.startNode();
     
-    controller = Controller(0);
-    controller.setStartAdress(3);
-    controller.addGroupWithLightsAndChannels(4,3);
-    controller.addGroupWithLightsAndChannels(4,3);
-  //  controller.printUsedChannels();
-  //  controller.addGroupWithLightsAndChannels(3,6);
-  //  controller.printUsedChannels();
+    cluster = Cluster(0);
+    cluster.setStartAdress(3);
+    cluster.addGroupWithLightsAndChannels(4,"rgb");
+   // cluster.addGroupWithLightsAndChannels(4,3);
+  //  cluster.printUsedChannels();
+  //  cluster.addGroupWithLightsAndChannels(3,6);
+  //  cluster.printUsedChannels();
 
- //   controller.addGroupWithLightsAndChannels(3,3);
-  //  controller.printUsedChannels();
+ //   cluster.addGroupWithLightsAndChannels(3,3);
+  //  cluster.printUsedChannels();
     
-    controller.getData(data);
+    cluster.getData(data);
 
 }
 

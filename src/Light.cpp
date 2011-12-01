@@ -16,10 +16,13 @@ using namespace ci::app;
 
 int Light::amount = 0;
 
-Light::Light(int size){
+Light::Light( const char* sources){
     
-    channels.assign(size, 200);
-    adressOffset = 0;
+    for(int i=0; i < strlen(sources); i++){
+        lightChannels.push_back( LightChannel(sources[i]));
+
+    }
+       adressOffset = 0;
     amount++;
 
     //pos = Vec3i(
@@ -27,60 +30,54 @@ Light::Light(int size){
 Light::Light(){
     
     // default r,g,b
-    channels.assign(3, 0);
+    lightChannels.push_back( LightChannel('r'));
+    lightChannels.push_back( LightChannel('g'));
+    lightChannels.push_back( LightChannel('b'));
     adressOffset = 0;
     amount++;
     //pos = Vec3i(
 }
 
-int Light::getRed(){
-    return channels[0];
-}
+void Light::setChannelValue(const char* channel, int value){
 
-
-int Light::getGreen(){
-    return channels[1];
-}
-
-
- int Light::getBlue(){
-    return channels[2];
-}
-
-void Light::setBlue(int b){
+    vector<LightChannel>::iterator it;
     
-    if(b < 0 || b > 255)
-        console()<< "New Color for Blue out of Bounds at  "<<typeid( *this ).name() << " number:  " << amount <<endl;
-    else
-    channels[2] = b;
+    for(it =lightChannels.begin(); it < lightChannels.end(); it++){
+    
+        if( it->getSource() == *channel){
+            it->setValue(value);
+            return;
+            
+        }
+    }
+    console()<< "Can't set Channel value, because Channel not found.  " << " At Light number " << amount <<endl;
+
+    
 }
 
- void Light::setGreen(int g){
-    if(g < 0 || g > 255)
-         console()<< "New Color for Green out of Bounds at  "<<typeid( *this ).name() << " number:  " << amount <<endl;
-    else
-    channels[1] = g;
-}
-
- void Light::setRed(int r){
-    if(r < 0 || r > 255)
-         console()<< "New Color for Red out of Bounds at  " <<typeid( *this ).name()<< " number:  " << amount <<endl;
-    else
-    channels[0] = r;
-}
 
 int Light::getValueAt(int pos){
     
-    if(pos < 0 || pos >= channels.size()){
+    if(pos < 0 || pos >= lightChannels.size()){
        console()<< "Channelposition out of Bounds. Pos: "<<pos  << " At Light number " << amount <<endl;
     return -1;
     }else
-        return channels[pos];
+        return lightChannels[pos].getValue();
                  
+}
+const char Light::getChannelAt(int pos){
+    
+    if(pos < 0 || pos >= lightChannels.size()){
+        console()<< "Channelposition out of Bounds. Pos: "<<pos  << " At Light  " << "Define Name"<<endl;
+        return 0;
+    }else
+        return lightChannels[pos].getSource();
+    
+    
 }
 int Light::getAmountOfChannels(){
     
-    return channels.size();
+    return lightChannels.size();
     
 }
 

@@ -1,5 +1,5 @@
 //
-//  Controller.cpp
+//  Cluster.cpp
 //  ForelleVisualApp
 //
 //  Created by Patrick Fuerst on 11/29/11.
@@ -7,7 +7,7 @@
 //
 
 
-#include "Controller.h"
+#include "Cluster.h"
 #include "cinder/app/AppBasic.h"
 
 using namespace std;
@@ -17,27 +17,27 @@ using namespace ci::app;
 
 const int MAX_DMX_CHANNELS = 512;
 
-Controller::Controller(){
+Cluster::Cluster(){
     
     setUniverse(0);
 
 }
-Controller::Controller(int u){
+Cluster::Cluster(int u){
     
     setUniverse(u);
     
 }
 
-Group* Controller::getGroupAt(int pos){
+Group* Cluster::getGroupAt(int pos){
     
     return &groups[pos];
 }
-void Controller::addGroup(){
+void Cluster::addGroup(){
     
     Group group = Group();
     groups.push_back(group);
 }
-void Controller::addGroupWithLightsAndChannels(int lights,int channels){
+void Cluster::addGroupWithLightsAndChannels(int lights,const char* channels){
     
    
     int usedChannels = getUsedChannels();
@@ -47,54 +47,54 @@ void Controller::addGroupWithLightsAndChannels(int lights,int channels){
     group.setAdressOffset(usedChannels);
   
     for(int i=0; i< lights; i++){
-        group.addLight(channels);
+        group.addLightWithChannels(channels);
     }
     
     groups.push_back(group);
 
     
 }
-int Controller::getUniverse(){
+int Cluster::getUniverse(){
     
     return universe;
     
 }
-void Controller::setUniverse(int u){
+void Cluster::setUniverse(int u){
     
     universe = u;
 }
 
-void Controller::printUsedChannels(){
+void Cluster::printUsedChannels(){
  
     int usedChannels = getUsedChannels();
     
     console() << "Used channels   " << usedChannels << endl;
 }
-void Controller::setStartAdress(int a){
+void Cluster::setStartAdress(int a){
     
     
     startAdress = a;
     
     
 }
-int Controller::getStartAdress(){
+int Cluster::getStartAdress(){
     
     return startAdress;
     
 }
-int Controller::getUsedChannels(){
+int Cluster::getUsedChannels(){
     
     // calculate next free channels
     //last pushed light adressoffset + amount of channels
     
     if(groups.size() > 0)
-        return groups.back().getAdressOffset() +groups.back().getUsedChannels();
+        return groups.back().getAdressOffset() + groups.back().getUsedChannels();
     else
         return 0;
  
 }
 
-void Controller::getData( uint8_t *data){
+void Cluster::getData( uint8_t *data){
 
     vector<Group>::iterator it;
     
@@ -112,9 +112,9 @@ void Controller::getData( uint8_t *data){
                 // first with channels in the light = i, + the offset of the light + the offset oh the group
                 int channel = i + it2->getAdressOffset() + it->getAdressOffset() + getStartAdress();
                 
-                console() << channel << endl;
                 int value = it2->getValueAt(i);
-                console() << "Value  " <<value << endl; 
+               
+                console() <</*clustername*/ "Light  " /*<< it2->getName(); */<< "  Channel  " << it2->getChannelAt(i) << "  Value  " <<value << endl; 
                 if(value != -1){
                     
                     data[channel] = value;

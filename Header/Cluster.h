@@ -1,5 +1,5 @@
 //
-//  Controller.h
+//  Cluster.h
 //  ForelleVisualApp
 //
 //  Created by Patrick Fuerst on 11/29/11.
@@ -8,7 +8,7 @@
 
 #include <vector>
 #include "Group.h"
-class Controller{
+class Cluster{
   
     
 private:
@@ -21,11 +21,11 @@ private:
     
     
 public:
-    Controller();
-    Controller(int u);
+    Cluster();
+    Cluster(int u);
     Group* getGroupAt(int pos);
     void addGroup();
-    void addGroupWithLightsAndChannels(int lights,int channels);
+    void addGroupWithLightsAndChannels(int lights,const char* channels);
     int getUniverse();
     void setUniverse(int u);
     void printUsedChannels();

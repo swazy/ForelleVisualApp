@@ -23,7 +23,7 @@ class Group{
     Group();
     void setAdressOffset(int a);
     int getAdressOffset();
-    void addLight(int lightSize);
+    void addLightWithChannels(const char * channels);
     Light* getLight(int pos);
     int getUsedChannels();
     vector<Light>* getLights();
