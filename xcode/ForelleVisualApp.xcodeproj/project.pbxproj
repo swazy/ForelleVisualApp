@@ -19,6 +19,7 @@
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		53E3CDFC0E86099300238D2B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E3CDFB0E86099300238D2B /* Carbon.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		FF5E6AAB1487EE84004EC6F0 /* XmlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF5E6AAA1487EE84004EC6F0 /* XmlParser.cpp */; };
 		FF66AE381487C5D400A47EBC /* LightChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF66AE371487C5D400A47EBC /* LightChannel.cpp */; };
 		FFAA12631486A64E00B81814 /* artnet.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12501486A64E00B81814 /* artnet.Plo */; };
 		FFAA12641486A64E00B81814 /* misc.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12511486A64E00B81814 /* misc.Plo */; };
@@ -57,7 +58,9 @@
 		53E3CDFB0E86099300238D2B /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* ForelleVisualApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ForelleVisualApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF66AE361487C43500A47EBC /* LightChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; name = LightChannel.h; path = ../Header/LightChannel.h; sourceTree = "<group>"; };
+		FF5E6AAA1487EE84004EC6F0 /* XmlParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XmlParser.cpp; sourceTree = "<group>"; };
+		FF5E6AAD1487EEBF004EC6F0 /* XmlParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XmlParser.h; path = ../Header/XmlParser.h; sourceTree = "<group>"; };
+		FF66AE361487C43500A47EBC /* LightChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LightChannel.h; path = ../Header/LightChannel.h; sourceTree = "<group>"; };
 		FF66AE371487C5D400A47EBC /* LightChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LightChannel.cpp; path = ../src/LightChannel.cpp; sourceTree = "<group>"; };
 		FFAA12501486A64E00B81814 /* artnet.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artnet.Plo; sourceTree = "<group>"; };
 		FFAA12511486A64E00B81814 /* misc.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = misc.Plo; sourceTree = "<group>"; };
@@ -118,6 +121,7 @@
 				00BAE6590E7ED9C10018A608 /* ForelleVisualAppApp.cpp */,
 				FFAA12701486A87100B81814 /* CinderArtnet.cpp */,
 				FF66AE371487C5D400A47EBC /* LightChannel.cpp */,
+				FF5E6AAA1487EE84004EC6F0 /* XmlParser.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -179,6 +183,7 @@
 				32CA4F630368D1EE00C91783 /* ForelleVisualApp_Prefix.pch */,
 				FFAA12721486A87F00B81814 /* CinderArtnet.h */,
 				FF66AE361487C43500A47EBC /* LightChannel.h */,
+				FF5E6AAD1487EEBF004EC6F0 /* XmlParser.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -314,6 +319,7 @@
 				FFAA126E1486A64E00B81814 /* transmit.c in Sources */,
 				FFAA12711486A87100B81814 /* CinderArtnet.cpp in Sources */,
 				FF66AE381487C5D400A47EBC /* LightChannel.cpp in Sources */,
+				FF5E6AAB1487EE84004EC6F0 /* XmlParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
