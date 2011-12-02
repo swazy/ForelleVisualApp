@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include "XmlParser.h"
+#include "rapidxml/rapidxml.hpp"
+#include "cinder/xml.h"
 
 using namespace ci::app;
 
@@ -18,30 +20,54 @@ XmlParser::XmlParser(){
 
 
 
-void XmlParser::loadTemplateClusterWithUniverse(vector<Cluster> &destination, int universe , const string &source){
+void XmlParser::loadTemplateClusterToUniverse(vector<Cluster> &destination, int universe , const string &source){
     
-    
-    const XmlTree xml( loadFile( source ) );
-	
-    Cluster cluster = Cluster(universe);
-    
-    
-    for( XmlTree::ConstIter itemIter = xml.begin("/cluster/group"); itemIter != xml.end(); ++itemIter ) {
-      
-        console() << "Name: " << itemIter->getAttributeValue<string>("name") << endl;
+    	
+   
+    //catch mal-formed Xml Files
+    try {
+        const XmlTree xml( loadFile( source ) );
 
+        Cluster cluster = Cluster(xml.getChild("cluster").getAttributeValue<string>("name"), universe);
+
+
+        // Iterate through Groups
+        for( XmlTree::ConstIter groupIter = xml.begin("/cluster/group"); groupIter != xml.end(); ++groupIter ) {
+          
+            Group group = Group(groupIter->getAttributeValue<string>("name"));
+
+            // Iterate through Lights
+            for( XmlTree::ConstIter lightIter = groupIter->begin(); lightIter != groupIter->end(); ++lightIter ) {
+                
+                Light light = Light(lightIter->getAttributeValue<string>("name"));
+                
+                // Iterate through Channels
+                for( XmlTree::ConstIter channelIter = lightIter->begin(); channelIter != lightIter->end(); ++channelIter ) {
+                    try{
+                    LightChannel channel = LightChannel(channelIter->getAttributeValue<string>("name"), channelIter->getAttributeValue<char>("source") );
+                    light.addChannel(channel);
+                    }catch(InvalidSourceException& e){
+                        console() << e.getMessage() << " Exception" << endl;
+                    }
+                }
+                
+                group.addLight(light);
+            }
+            
+            cluster.addGroup(group);
+        }
+        
+        destination.push_back(cluster);
+
+    }catch  (rapidxml::parse_error &e)
+    {
+        console()<< e.what() << "  RapidXML exception!"<< endl;
+    }catch(cinder::XmlTree::ExcChildNotFound &e){
+        console() << e.what() << "Child not found" <<endl;
+    }catch(cinder::XmlTree::ExcAttrNotFound &e){
+        console() << e.what() << "Attribute not found" <<endl;
     }
-//        
-//        string titleLine( itemIter->getChild( "title" ).getValue() );
-//		size_t firstComma = titleLine.find( ',' );
-//		float magnitude = fromString<float>( titleLine.substr( titleLine.find( ' ' ) + 1, firstComma - 2 ) );
-//		string title = titleLine.substr( firstComma + 2 );
-//        
-//		istringstream locationString( itemIter->getChild( "georss:point" ).getValue() );
-//		Vec2f locationVector;
-//		locationString >> locationVector.x >> locationVector.y;
-//		
-//		mEarth.addQuake( locationVector.x, locationVector.y, magnitude, title );		
-
+    
+    
 
 }

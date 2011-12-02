@@ -19,7 +19,7 @@ private:
 public:
     
     XmlParser();
-    void loadTemplateClusterWithUniverse(vector<Cluster> &destination, int universe  ,const string &source);
+    void loadTemplateClusterToUniverse(vector<Cluster> &destination, int universe  ,const string &source);
     
     
     

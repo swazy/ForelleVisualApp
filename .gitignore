@@ -27,3 +27,5 @@ xcode/.DS_Store
 
 .DS_Store
 
+
+xcode/XmlParser.cpp
