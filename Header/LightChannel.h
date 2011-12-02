@@ -7,7 +7,11 @@
 //
 
 
+#include "InvalidSourceException.h"
+#include "InvalidValueException.h"
 
+using namespace std;
+using namespace ci;
 
 class LightChannel{
     
@@ -17,14 +21,16 @@ private:
     
     int value;
     char source;
-    
+    string name;
+    Vec3i offset;
 public:
     LightChannel();
-    LightChannel(const char source);
+    LightChannel( const string &name,  char source);
     int getValue();
-    const char getSource();
-    void setValue(int value);
-    void setSource( const char source);
-    
+    char getSource();
+    void setValue(int value)throw(InvalidValueException);
+    void setSource( const char &source)throw(InvalidSourceException);
+    string* getName();
+    Vec3i* getOffset();
     
 };

@@ -22,34 +22,27 @@ Cluster::Cluster(){
     setUniverse(0);
 
 }
-Cluster::Cluster(int u){
+Cluster::Cluster(const string &name, int u){
     
     setUniverse(u);
+    this->name = name;
+    startAdress = 0;
     
 }
 
 Group* Cluster::getGroupAt(int pos){
     
+    if (pos < 0 || pos >= groups.size()) {
+        throw InvalidValueException( "Can't get Group. Channelposition out of Bounds.  At Group " + string(name), pos);
+    }
     return &groups[pos];
 }
-void Cluster::addGroup(){
-    
-    Group group = Group();
-    groups.push_back(group);
-}
-void Cluster::addGroupWithLightsAndChannels(int lights,const char* channels){
+
+void Cluster::addGroup( Group &group){
     
    
     int usedChannels = getUsedChannels();
-    
-  
-    Group group = Group();
     group.setAdressOffset(usedChannels);
-  
-    for(int i=0; i< lights; i++){
-        group.addLightWithChannels(channels);
-    }
-    
     groups.push_back(group);
 
     
@@ -59,9 +52,12 @@ int Cluster::getUniverse(){
     return universe;
     
 }
-void Cluster::setUniverse(int u){
+void Cluster::setUniverse(int u)throw(InvalidValueException){
     
-    universe = u;
+    if(u < 0 || u > 3)
+         throw InvalidValueException( "Cluster universe must be between 0 and 3.  At Group " + string(name), u);
+    else
+        universe = u;
 }
 
 void Cluster::printUsedChannels(){
@@ -97,37 +93,57 @@ int Cluster::getUsedChannels(){
 void Cluster::getData( uint8_t *data){
 
     vector<Group>::iterator it;
-    
-    
+    int channel = 0;
     for(it = groups.begin(); it < groups.end(); it++){
-    
         vector<Light> *lights = it->getLights();
         vector<Light>::iterator it2;
         
         for(it2 = lights->begin(); it2 < lights->end(); it2++){
-            
-            for(int i=0; i < it2->getAmountOfChannels(); i++){
-                    
+           
+            vector<LightChannel> *channels = it2->getChannels();
+            vector<LightChannel>::iterator it3;
+
+            //dont forget the channels
+            int i = 0;
+            for(it3 = channels->begin(); it3 < channels->end(); it3++){
+
                 // calculate real channel 
                 // first with channels in the light = i, + the offset of the light + the offset oh the group
-                int channel = i + it2->getAdressOffset() + it->getAdressOffset() + getStartAdress();
-                
-                int value = it2->getValueAt(i);
-               
-                console() <</*clustername*/ "Light  " /*<< it2->getName(); */<< "  Channel  " << it2->getChannelAt(i) << "  Value  " <<value << endl; 
-                if(value != -1){
-                    
-                    data[channel] = value;
-                }else
-                    data[channel] = 0;
-
-                
-                
+                 channel = i + it2->getAdressOffset() + it->getAdressOffset() + getStartAdress();
+                i++;
+                data[channel] = it3->getValue();
             }
             
         }
     }
     
     
+}
+
+void Cluster::printCluster(){
+    
+    vector<Group>::iterator it;
+    
+    console() <<"ClusterName: " <<name <<endl;
+    
+    for(it = groups.begin(); it < groups.end(); it++){
+        console() << "\tGroupName:  " << *it->getName() <<endl;
+        vector<Light> *lights = it->getLights();
+        vector<Light>::iterator it2;
+        
+        for(it2 = lights->begin(); it2 < lights->end(); it2++){
+            
+            console() << "\t\tLight  " << *it2->getName() <<endl;
+            vector<LightChannel> *channels = it2->getChannels();
+            vector<LightChannel>::iterator it3;
+      
+            for(it3 = channels->begin(); it3 < channels->end(); it3++){
+                console() << "\t\t\tChannelSource  " << it3->getSource() << "  ChannelValue  " <<it3->getValue() << endl; 
+            }
+            
+        }
+    }
+    
+
 }
 

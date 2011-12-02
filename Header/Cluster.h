@@ -22,17 +22,17 @@ private:
     
 public:
     Cluster();
-    Cluster(int u);
+    Cluster(const string &name, int u);
     Group* getGroupAt(int pos);
-    void addGroup();
-    void addGroupWithLightsAndChannels(int lights,const char* channels);
+    void addGroup( Group &group);
     int getUniverse();
-    void setUniverse(int u);
+    void setUniverse(int u)throw(InvalidValueException);
     void printUsedChannels();
     void setStartAdress(int a);
     int getStartAdress();
     int getUsedChannels();
     void getData( uint8_t *data);
+    void printCluster();
 
     
 }; 

@@ -9,6 +9,7 @@
 #include "cinder/app/AppBasic.h"
 #include "LightChannel.h"
 using namespace ci;
+using namespace std;
 
 
 class Light{
@@ -16,22 +17,29 @@ class Light{
     
 private: 
     
-    std::vector<LightChannel> lightChannels;  
+    vector<LightChannel> lightChannels;  
     Vec3i pos;
     static int amount;
     int adressOffset;
+    string name;
+    Vec3i offset;
     
 public:
     Light();
-    Light(const char* sources);
+    Light(const string &name);
+    Vec3i* getOffset();
+    void setChannels(vector<LightChannel> & channels);
+    void addChannel(LightChannel &channel);
+    vector<LightChannel>* getChannels();
     int  getAmountOfChannels();
     void setAdressOffset(int o);
     int getAdressOffset();
-    void setChannelValue(const char* channel, int value);
-    const char getChannelAt(int pos);
-    int getValueAt(int pos);
-    void setPos(Vec3i pos);
-    Vec3i getPos();
+    void setChannelValue(const char* channel, int value)throw(InvalidValueException);
+    char getSourceAt(int pos) throw(InvalidValueException,InvalidSourceException);
+    int getValueAt(int pos) throw(InvalidValueException);
+    void setPos(Vec3i &pos);
+    Vec3i* getPos();
+    string* getName();
     
     
     
