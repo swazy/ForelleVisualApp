@@ -16,17 +16,18 @@ class Group{
     private:
     
     vector<Light> lights;
-    
+    string name;
     int adressOffset;
     
     public:
-    Group();
+    Group(const string &name);
     void setAdressOffset(int a);
     int getAdressOffset();
-    void addLightWithChannels(const char * channels);
-    Light* getLight(int pos);
+    void addLight(Light &light);
+    Light* getLight(int pos)throw(InvalidValueException);
     int getUsedChannels();
     vector<Light>* getLights();
+    string* getName();
  
     
     

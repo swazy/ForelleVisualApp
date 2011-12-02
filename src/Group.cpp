@@ -16,9 +16,10 @@ using namespace ci::app;
 
 #include "Group.h"
 
-Group::Group(){
+Group::Group(const string &name ){
     
     adressOffset =0;
+    this->name = name;
     
 }
 
@@ -35,20 +36,18 @@ int Group::getAdressOffset(){
     return adressOffset;
     
 }
-void Group::addLightWithChannels(const char * channels){
+void Group::addLight( Light &light){
     
-    Light l = Light(channels);
     
     int usedChannels = getUsedChannels();
-    l.setAdressOffset(usedChannels);
-    lights.push_back(l);
+    light.setAdressOffset(usedChannels);
+    lights.push_back(light);
     
 }
-Light* Group::getLight(int pos){
+Light* Group::getLight(int pos)throw(InvalidValueException){
     
     if(pos <0 || pos >= lights.size()){
-       console() << "Cant get light. Pos out of Bounds" << endl;
-       return NULL;
+       throw InvalidValueException( "Can't get light. Pos out of Bounds. At Group " + string(name), pos);
     }
        else
            return &lights.at(pos);
@@ -70,5 +69,8 @@ int Group::getUsedChannels(){
 vector<Light>* Group::getLights(){
     
     return &lights;
+}
+string* Group::getName(){
+    return &name;
 }
 
