@@ -1,6 +1,25 @@
-<cluster name="Cluster">
-	<group name="Eurolight">
-		<light name="Light 01">
-        </light>
-    </group>
+<?xml version="1.0"?>
+<cluster name="Cluster1" univers="" address="" x=""y=""z="">
+	<group name="Eurolight" address="" xo="" yo="" zo="">
+		<light name="Light 01" address="" xo="" yo="0" zo="">
+			<channel name="Red" source="R" xo="" yo="" zo=""></channel>
+			<channel name="Green" source="G" xo="" yo="" zo=""></channel>
+			<channel name="Blue" source="B" xo="" yo="" zo=""></channel>
+		</light>
+		<light name="Light 02" address="" xo="" yo="1" zo="">
+			<channel name="Red" source="R" xo="" yo="" zo=""></channel>
+			<channel name="Green" source="G" xo="" yo="" zo=""></channel>
+			<channel name="Blue" source="B" xo="" yo="" zo=""></channel>
+		</light>
+		<light name="Light 03" address="" xo="" yo="2" zo="">
+			<channel name="Red" source="h" xo="" yo="" zo=""></channel>
+			<channel name="Green" source="G" xo="" yo="" zo=""></channel>
+			<channel name="Blue" source="B" xo="" yo="" zo=""></channel>
+		</light>
+        <light name="Light 04" address="" xo="" yo="2" zo="">
+			<channel name="Red" source="R" xo="" yo="" zo=""></channel>
+			<channel name="Green" source="G" xo="" yo="" zo=""></channel>
+			<channel name="Blue" source="B" xo="" yo="" zo=""></channel>
+		</light>
+	</group>
 </cluster>
