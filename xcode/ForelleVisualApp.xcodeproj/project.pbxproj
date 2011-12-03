@@ -23,7 +23,7 @@
 		FF32AFFE14893787009FDD2A /* InvalidSourceException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF32AFFD14893787009FDD2A /* InvalidSourceException.cpp */; };
 		FF5E6AAB1487EE84004EC6F0 /* XmlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF5E6AAA1487EE84004EC6F0 /* XmlParser.cpp */; };
 		FF66AE381487C5D400A47EBC /* LightChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF66AE371487C5D400A47EBC /* LightChannel.cpp */; };
-		FFA26C2D148A2E82003798DE /* Rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = FFA26C2C148A2E82003798DE /* Rainbow.png */; };
+		FFA26C31148A6C79003798DE /* testbild.png in Resources */ = {isa = PBXBuildFile; fileRef = FFA26C30148A6C79003798DE /* testbild.png */; };
 		FFAA12631486A64E00B81814 /* artnet.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12501486A64E00B81814 /* artnet.Plo */; };
 		FFAA12641486A64E00B81814 /* misc.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12511486A64E00B81814 /* misc.Plo */; };
 		FFAA12651486A64E00B81814 /* network.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12521486A64E00B81814 /* network.Plo */; };
@@ -70,7 +70,7 @@
 		FF66AE361487C43500A47EBC /* LightChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LightChannel.h; path = ../Header/LightChannel.h; sourceTree = "<group>"; };
 		FF66AE371487C5D400A47EBC /* LightChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LightChannel.cpp; path = ../src/LightChannel.cpp; sourceTree = "<group>"; };
 		FFA26C2A148A2E79003798DE /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
-		FFA26C2C148A2E82003798DE /* Rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rainbow.png; sourceTree = "<group>"; };
+		FFA26C30148A6C79003798DE /* testbild.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testbild.png; sourceTree = "<group>"; };
 		FFAA12501486A64E00B81814 /* artnet.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artnet.Plo; sourceTree = "<group>"; };
 		FFAA12511486A64E00B81814 /* misc.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = misc.Plo; sourceTree = "<group>"; };
 		FFAA12521486A64E00B81814 /* network.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = network.Plo; sourceTree = "<group>"; };
@@ -204,7 +204,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FFA26C2C148A2E82003798DE /* Rainbow.png */,
+				FFA26C30148A6C79003798DE /* testbild.png */,
 				FFA26C2A148A2E79003798DE /* Resources.h */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				00CCAF14116A9FEE008396D5 /* CinderApp.icns */,
@@ -312,7 +312,7 @@
 				FFAA12661486A64E00B81814 /* receive.Plo in Resources */,
 				FFAA12671486A64E00B81814 /* tod.Plo in Resources */,
 				FFAA12681486A64E00B81814 /* transmit.Plo in Resources */,
-				FFA26C2D148A2E82003798DE /* Rainbow.png in Resources */,
+				FFA26C31148A6C79003798DE /* testbild.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
