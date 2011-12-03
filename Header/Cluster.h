@@ -17,22 +17,33 @@ private:
     int startAdress;;
     std::vector<Group> groups;
     string name;
-    
+    Vec3i pos;
     
     
 public:
     Cluster();
     Cluster(const string &name, int u);
+    
     Group* getGroupAt(int pos);
     void addGroup( Group &group);
+
+    void setPos(Vec3i pos);
+    Vec3i getPos();
+    
+    
     int getUniverse();
     void setUniverse(int u)throw(InvalidValueException);
-    void printUsedChannels();
+    
     void setStartAdress(int a);
-    int getStartAdress();
+    int  getStartAdress();
+    
     int getUsedChannels();
-    void getData( uint8_t *data);
+    void printUsedChannels();
+
+   
     void printCluster();
+    void getChannelData(uint8_t *data);
+    void updateAndDrawCluster(Surface &surface);
 
     
 }; 
