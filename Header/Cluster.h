@@ -29,8 +29,15 @@ public:
 
     void setPos(Vec3i pos);
     Vec3i getPos();
+   
+    string* getName();
+    void setName(string &name);
     
-    
+    void moveUp(int y);
+    void moveDown(int y);
+    void moveLeft(int x);
+    void moveRight(int x);
+
     int getUniverse();
     void setUniverse(int u)throw(InvalidValueException);
     
