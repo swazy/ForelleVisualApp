@@ -18,16 +18,14 @@ class Light{
 private: 
     
     vector<LightChannel> lightChannels;  
-    Vec3i pos;
     static int amount;
     int adressOffset;
     string name;
-    Vec3i offset;
+    Vec3i posOffset;
     
 public:
     Light();
     Light(const string &name);
-    Vec3i* getOffset();
     void setChannels(vector<LightChannel> & channels);
     void addChannel(LightChannel &channel);
     vector<LightChannel>* getChannels();
@@ -37,8 +35,8 @@ public:
     void setChannelValue(const char* channel, int value)throw(InvalidValueException);
     char getSourceAt(int pos) throw(InvalidValueException,InvalidSourceException);
     int getValueAt(int pos) throw(InvalidValueException);
-    void setPos(Vec3i &pos);
-    Vec3i* getPos();
+    void setPosOffset(Vec3i posOffset);
+    Vec3i getPosOffset();
     string* getName();
     
     
