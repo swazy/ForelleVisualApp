@@ -1,25 +1,26 @@
 <?xml version="1.0"?>
 <cluster name="Cluster1" univers="" address="" x=""y=""z="">
-	<group name="Eurolight" address="" xo="" yo="" zo="">
-		<light name="Light 01" address="" xo="" yo="0" zo="">
-			<channel name="Red" source="R" xo="" yo="" zo=""></channel>
-			<channel name="Green" source="G" xo="" yo="" zo=""></channel>
-			<channel name="Blue" source="B" xo="" yo="" zo=""></channel>
+	<group name="Eurolight" address="" xo="0" yo="0" zo="0">
+		<light name="Light 01" address="" xo="0" yo="0" zo="0">
+			<channel name="Red" source="R" xo="0" yo="0" zo="0"></channel>
+			<channel name="Green" source="G" xo="0" yo="0" zo="0"></channel>
+			<channel name="Blue" source="B" xo="0" yo="0" zo="0"></channel>
 		</light>
-		<light name="Light 02" address="" xo="" yo="1" zo="">
-			<channel name="Red" source="R" xo="" yo="" zo=""></channel>
-			<channel name="Green" source="G" xo="" yo="" zo=""></channel>
-			<channel name="Blue" source="B" xo="" yo="" zo=""></channel>
+		<light name="Light 02" address="" xo="0" yo="10" zo="0">
+			<channel name="Red" source="R" xo="0" yo="0" zo="0"></channel>
+			<channel name="Green" source="G" xo="10" yo="0" zo="0"></channel>
+			<channel name="Blue" source="B" xo="20" yo="0" zo="0"></channel>
 		</light>
-		<light name="Light 03" address="" xo="" yo="2" zo="">
-			<channel name="Red" source="h" xo="" yo="" zo=""></channel>
-			<channel name="Green" source="G" xo="" yo="" zo=""></channel>
-			<channel name="Blue" source="B" xo="" yo="" zo=""></channel>
+		<light name="Light 03" address="" xo="0" yo="50" zo="0">
+			<channel name="Red" source="R" xo="0" yo="0" zo="0"></channel>
+			<channel name="Green" source="G" xo="10" yo="0" zo="0"></channel>
+			<channel name="Blue" source="B" xo="20" yo="0" zo="0"></channel>
 		</light>
-        <light name="Light 04" address="" xo="" yo="2" zo="">
-			<channel name="Red" source="R" xo="" yo="" zo=""></channel>
-			<channel name="Green" source="G" xo="" yo="" zo=""></channel>
-			<channel name="Blue" source="B" xo="" yo="" zo=""></channel>
-		</light>
+        <light name="Light 04" address="" xo="0" yo="100" zo="0">
+			<channel name="Red" source="R" xo="0" yo="0" zo="0"></channel>
+			<channel name="Green" source="G" xo="10" yo="0" zo="0"></channel>
+			<channel name="Blue" source="B" xo="20" yo="0" zo="0"></channel>
+		</light> 
 	</group>
 </cluster>
+    
