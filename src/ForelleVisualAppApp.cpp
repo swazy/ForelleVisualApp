@@ -20,7 +20,11 @@ class ForelleVisualAppApp : public AppBasic {
 	void update();
 	void draw();
     void prepareSettings( Settings *settings );
+    void keyDown( KeyEvent event );
     void printClusters(vector<Cluster> &clusters);
+    void updateAndDrawClusters(vector<Cluster> &clusters, Surface &surface);
+    void changeSelectedCluster(vector<Cluster> &clusters, vector<Cluster>::iterator &selectedCluster);
+    void getData(uint8_t *data);
  
     //  void getPixelValue(vector<Cluster> &clusters);
     vector<Cluster> clusters;
@@ -28,6 +32,12 @@ class ForelleVisualAppApp : public AppBasic {
     CinderArtnet node;
     XmlParser parser;
     Surface surface;	
+    
+    Boolean readPixels;
+    Boolean sendData;
+
+    //selected cluster
+    vector<Cluster>::iterator selectedCluster;
     
     
 };
@@ -44,16 +54,24 @@ void ForelleVisualAppApp::setup()
     node.setNodeTypeAsServer();
     node.setSubnetAdress(0);
     node.enableDMXPortAsInputAndSetAdress(0, 1);
-    node.enableDMXPortAsInputAndSetAdress(1, 2);
+   // node.enableDMXPortAsInputAndSetAdress(1, 2);
     node.startNode();
      
 
+    //setup boolean variables
+    
+    readPixels = true;
+    sendData  = true;
+    
     parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight.xml");
-
+    parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight.xml");
+ 
     surface = Surface( loadImage(loadResource(RES_IMAGE) ));
 
-    
-    
+    if(!clusters.empty())
+        selectedCluster = clusters.end()-1;
+         
+
     printClusters(clusters);
     
 }
@@ -61,13 +79,34 @@ void ForelleVisualAppApp::setup()
 void ForelleVisualAppApp::mouseDown( MouseEvent event )
 {
 }
+void ForelleVisualAppApp::keyDown( KeyEvent event )
+{
+    if( event.getCode() == app::KeyEvent::KEY_UP && !clusters.empty() ) {
+		selectedCluster->moveUp(1);
+	}
+	else if( event.getCode() == app::KeyEvent::KEY_DOWN && !clusters.empty()) {
+            selectedCluster->moveDown(10);
+	}
+    else if( event.getCode() == app::KeyEvent::KEY_LEFT && !clusters.empty() ) {
+              selectedCluster->moveLeft(10);
+    }
+    else if( event.getCode() == app::KeyEvent::KEY_RIGHT && !clusters.empty()) {
+        selectedCluster->moveRight(10);
+    }
+    else if( event.getCode() == app::KeyEvent::KEY_TAB ) {
+        changeSelectedCluster(clusters, selectedCluster);
+    }    
+    else if( event.getCode() == 'a' ) {
+        parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight2.xml");
+        // if this is ther first element in the vector, set Iterator new
+        if(clusters.size() == 1)
+            selectedCluster = clusters.end()-1;
+    }
+
+}
 
 void ForelleVisualAppApp::update()
 {    
-  
-//    if(!clusters.empty())
-//        clusters.back().printCluster();
-//    node.sendDataAtPort(data, 1);
 
 }
 
@@ -75,15 +114,19 @@ void ForelleVisualAppApp::draw()
 {
 	// clear out the window with black
 	gl::clear( Color( 0, 0, 0 ) ); 
-    gl::clear( Color( 0.5f, 0.5f, 0.5f ) );
-	gl::enableAlphaBlending();
-	
+  	
 	if( surface)
 		gl::draw( surface, Vec2f( 0, 0 ) );
-    if(!clusters.empty())
-        clusters.back().updateAndDrawCluster(surface);
-        
     
+    if(readPixels)
+        updateAndDrawClusters(clusters, surface);
+        getData(data);
+   // console() << selectedCluster->getName() << endl;
+  //  printClusters(clusters);
+    
+    if(sendData)
+        node.sendDataAtPort(data, 0);
+
 
 }
 void ForelleVisualAppApp::printClusters(vector<Cluster> &clusters)
@@ -97,33 +140,38 @@ void ForelleVisualAppApp::printClusters(vector<Cluster> &clusters)
     }
     
 }
-//void ForelleVisualAppApp::getPixelValue(vector<Cluster> &clusters){
-//    
-//    vector<Group> groups = clusters.back().getGroupAt(0); 
-//    vector<Group>::iterator it;
-//    
-//        
-//    for(it = groups.begin(); it < groups.end(); it++){
-//        console() << "\tGroupName:  " << *it->getName() <<endl;
-//        vector<Light> *lights = it->getLights();
-//        vector<Light>::iterator it2;
-//        
-//        for(it2 = lights->begin(); it2 < lights->end(); it2++){
-//            
-//            console() << "\t\tLight  " << *it2->getName() <<endl;
-//            vector<LightChannel> *channels = it2->getChannels();
-//            vector<LightChannel>::iterator it3;
-//            
-//            for(it3 = channels->begin(); it3 < channels->end(); it3++){
-//                console() << "\t\t\tChannelSource  " << it3->getSource() << "  ChannelValue  " <<it3->getValue() << endl; 
-//            }
-//            
-//        }
-//    }
-
+void ForelleVisualAppApp::updateAndDrawClusters(vector<Cluster> &clusters, Surface &surface){
+    
+    vector<Cluster>::iterator it;
+    
+    for (it = clusters.begin(); it < clusters.end(); it++) {
+        
+        it->updateAndDrawCluster(surface);        
+    }
     
     
-//}
+}
+void ForelleVisualAppApp::getData(uint8_t *data){
+    
+    vector<Cluster>::iterator it;
+    
+    for (it = clusters.begin(); it < clusters.end(); it++) {
+        
+        it->getChannelData(data);        
+    }
+    
+    
+}
+void ForelleVisualAppApp::changeSelectedCluster(vector<Cluster> &clusters, vector<Cluster>::iterator &selectedCluster){
+    
+    if(!clusters.empty()){
+    
+        if(selectedCluster == clusters.begin())
+            selectedCluster =  clusters.end()-1  ;
+        else
+            --selectedCluster;
+    }
+}
 
 
 CINDER_APP_BASIC( ForelleVisualAppApp, RendererGl )
