@@ -25,7 +25,7 @@ private:
     Vec3i posOffset;
 public:
     LightChannel();
-    LightChannel( const string &name,  char source);
+    LightChannel( const string &name,  char source)throw (InvalidSourceException);
     int getValue();
     char getSource();
     void setValue(int value)throw(InvalidValueException);

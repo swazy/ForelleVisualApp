@@ -21,7 +21,7 @@ LightChannel::LightChannel(){
     
 } 
 
-LightChannel::LightChannel( const string &name,  char source){
+LightChannel::LightChannel( const string &name,  char source)throw (InvalidSourceException){
     
 
     if(source == 'R' || source == 'G' || source == 'B' || source == 'A' )
