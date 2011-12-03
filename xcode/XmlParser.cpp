@@ -30,7 +30,7 @@ void XmlParser::loadTemplateClusterToUniverse(vector<Cluster> &destination, int 
         const XmlTree xml( loadFile( source ) );
 
         Cluster cluster = Cluster(xml.getChild("cluster").getAttributeValue<string>("name"), universe);
-        cluster.setPos(  Vec3i( getWindowWidth()/2 -200, getWindowHeight()/2,0));
+        cluster.setPos(  Vec3i( getWindowWidth()/2 -300, getWindowHeight()/2,0));
 
         // Iterate through Groups
         for( XmlTree::ConstIter groupIter = xml.begin("/cluster/group"); groupIter != xml.end(); ++groupIter ) {
@@ -52,18 +52,20 @@ void XmlParser::loadTemplateClusterToUniverse(vector<Cluster> &destination, int 
 
                 // Iterate through Channels
                 for( XmlTree::ConstIter channelIter = lightIter->begin(); channelIter != lightIter->end(); ++channelIter ) {
+                    LightChannel channel;
                     try{
-                        LightChannel channel = LightChannel(channelIter->getAttributeValue<string>("name"), channelIter->getAttributeValue<char>("source") );
+                        channel = LightChannel(channelIter->getAttributeValue<string>("name"), channelIter->getAttributeValue<char>("source") );
                         int cx =channelIter->getAttributeValue<int>("xo");
                         int cy =channelIter->getAttributeValue<int>("yo");
                         int cz =channelIter->getAttributeValue<int>("zo");
                         
                         channel.setPosOffset(Vec3i(cx,cy,cz));
-                        light.addChannel(channel);
                         
                     }catch(InvalidSourceException& e){
                         throw rapidxml::parse_error( e.getMessage().c_str(), 0 );
                     }
+                    light.addChannel(channel);
+
                 }
                 
                 group.addLight(light);
