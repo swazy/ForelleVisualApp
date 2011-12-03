@@ -22,7 +22,7 @@ private:
     int value;
     char source;
     string name;
-    Vec3i offset;
+    Vec3i posOffset;
 public:
     LightChannel();
     LightChannel( const string &name,  char source);
@@ -31,6 +31,8 @@ public:
     void setValue(int value)throw(InvalidValueException);
     void setSource( const char &source)throw(InvalidSourceException);
     string* getName();
-    Vec3i* getOffset();
-    
+    Vec3i getPosOffset();
+    void setPosOffset(Vec3i posOffset);
+
+
 };

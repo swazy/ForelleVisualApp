@@ -16,26 +16,30 @@ LightChannel::LightChannel(){
     value = 0;
     source = '0';
     name = "";
-    offset = Vec3i(0,0,0);
+    posOffset = Vec3i(0,0,0);
     
     
 } 
 
 LightChannel::LightChannel( const string &name,  char source){
     
-    value = 10;
-    if(source != 'R' || source != 'G' || source != 'B' || source != 'A' )
-        throw InvalidSourceException("Source must be R,G,B or A ", source);
-    else
-        this->source = source;
 
+    if(source == 'R' || source == 'G' || source == 'B' || source == 'A' )
+        this->source = source;
+    else
+        throw InvalidSourceException("Source must be R,G,B or A ", source);
+
+    value   = 10;
     this->name = name;
-    this->offset = Vec3i(0,0,0);
+    this->posOffset = Vec3i(0,0,0);
 
     
 } 
-Vec3i* LightChannel::getOffset(){
-    return &offset;
+Vec3i LightChannel::getPosOffset(){
+    return posOffset;
+}
+void LightChannel::setPosOffset(Vec3i posOffset){
+    this->posOffset = posOffset;
 }
 
 int LightChannel::getValue(){
@@ -55,8 +59,11 @@ void LightChannel::setValue(int value)throw(InvalidValueException){
     this->value = value;
 }
 void LightChannel::setSource( const char &source) throw(InvalidSourceException){
-    if(source != 'R' || source != 'G' || source != 'B' || source != 'A'  )
-        throw InvalidSourceException("Source must be r,g,b or a ", source);
+    if(source == 'R' || source == 'G' || source == 'B' || source == 'A' )
+        this->source = source;
     else
-    this->source = source;
+        throw InvalidSourceException("Source must be R,G,B or A ", source);
+    
+
 }
+
