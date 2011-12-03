@@ -20,7 +20,9 @@ Group::Group(const string &name ){
     
     adressOffset =0;
     this->name = name;
+    setPosOffset(Vec3i(0,0,0));
     
+
 }
 
 
@@ -36,6 +38,13 @@ int Group::getAdressOffset(){
     return adressOffset;
     
 }
+void Group::setPosOffset(Vec3i posOffset){
+    this->posOffset = posOffset;
+}
+Vec3i Group::getPosOffset(){
+    return posOffset;
+}
+
 void Group::addLight( Light &light){
     
     
@@ -73,4 +82,5 @@ vector<Light>* Group::getLights(){
 string* Group::getName(){
     return &name;
 }
+
 
