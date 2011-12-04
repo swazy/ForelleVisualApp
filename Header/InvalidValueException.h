@@ -5,6 +5,8 @@
 //  Created by Patrick Fürst on 02.12.11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
+#ifndef InvalidValueException_H
+#define InvalidValueException_H
 
 using namespace std;
 
@@ -22,3 +24,4 @@ public:
     string getMessage();
         
 };
+#endif

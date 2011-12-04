@@ -5,7 +5,8 @@
 //  Created by Patrick Fuerst on 11/29/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
-
+#ifndef Cluster_H
+#define Cluster_H
 #include <vector>
 #include "Group.h"
 class Cluster{
@@ -54,3 +55,4 @@ public:
 
     
 }; 
+#endif

@@ -5,6 +5,8 @@
 //  Created by Patrick Fuerst on 11/29/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
+#ifndef Group_H
+#define Group_H
 
 #include <vector>
 #include "Light.h"
@@ -37,3 +39,4 @@ class Group{
     
     
 };
+#endif
