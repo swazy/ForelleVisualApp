@@ -8,6 +8,7 @@
 #include "cinder/ImageIo.h"
 #include "cinder/params/Params.h"
 #include "Controller.h"
+#include "cinderSyphon.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -31,6 +32,8 @@ class ForelleVisualAppApp : public AppBasic {
     uint8_t data[512];
     CinderArtnet node;
     XmlParser parser;
+  
+    
     Surface surface;	
     
     Boolean readPixels;
@@ -42,10 +45,11 @@ class ForelleVisualAppApp : public AppBasic {
     // Parameter Window
     params::InterfaceGl		*mParams;
     
-    //
+    //Controller to manage Clusters
     Controller controller;
 
-    
+    syphonClient mClientSyphon; //our syphon client
+
     
 };
 void ForelleVisualAppApp::prepareSettings( Settings *settings )
@@ -68,7 +72,18 @@ void ForelleVisualAppApp::setup()
 //	mParams.addParam( "Light Direction", &mLightDirection, "" );
 //	mParams.addButton( "Button!", std::bind( &TweakBarApp::button, this ) );
 //	mParams.addParam( "String ", &mString, "" );
+	
+    //setup Client
+    mClientSyphon.setup();
 
+    // in order for this to work, you must run simple server from the testapps directory
+	// any other syphon item you create would work as well, just change the name
+    mClientSyphon.setApplicationName("Simple Server");
+    mClientSyphon.setServerName("");
+    mClientSyphon.bind();
+    //surface = Surface(*mClientSyphon.mTex);
+   
+    
     
     //othe way to initialsie with 0, and don´t have to update ??
     for (int i=0; i < Const::MAX_DMX_CHANNELS ; i++) {
@@ -84,7 +99,7 @@ void ForelleVisualAppApp::setup()
     parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight.xml");
  //   parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight2.xml");
  
-    surface = Surface( loadImage(loadResource(RES_IMAGE) ));
+ //   surface = Surface( loadImage(loadResource(RES_IMAGE) ));
 
     if(!clusters.empty())
         selectedCluster = clusters.end()-1;
@@ -161,13 +176,20 @@ void ForelleVisualAppApp::update()
 void ForelleVisualAppApp::draw()
 {
 	// clear out the window with black
-	gl::clear( Color( 0, 0, 0 ) ); 
+	gl::clear( Color( 1, 1, 1 ) ); 
   	
-	if( surface)
-		gl::draw( surface, Vec2f( 0, 0 ) );
+	mClientSyphon.bind();
+   // Surface surface(mClientSyphon.mTex->weakClone());
+   // console() << surface.getSize() << endl;
+    mClientSyphon.unbind();
+   
     
+   // if( surface)
+		//gl::draw( mClientSyphon.getSurface(), Vec2f( 0, 0 ) );
+    
+   // mClientSyphon.draw(0, 0);
     if(readPixels)
-        controller.updateAndDrawClusters(clusters, surface);
+     //   controller.updateAndDrawClusters(clusters, surface);
         controller.getData(clusters,data);
        
     if(sendData)
@@ -176,6 +198,7 @@ void ForelleVisualAppApp::draw()
     
     // Draw the interface
 	//params::InterfaceGl::draw();
+	
 
 
 }
