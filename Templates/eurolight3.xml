@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<cluster name="Cluster1" univers="" address="" x="0"y="0"z="0">
+<cluster name="Cluster3" univers="" address="" x="0"y="0"z="0">
 	<group name="Eurolight" address="" xo="100" yo="0" zo="0">
 		<light name="Light 01" address="" xo="0" yo="0" zo="0">
 			<channel name="Red" source="R" xo="0" yo="0" zo="0"></channel>
