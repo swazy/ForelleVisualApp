@@ -24,8 +24,8 @@ class Group{
     Group(const string &name);
     void setAdressOffset(int a);
     void setPosOffset(Vec3i posOffset);
-    Vec3i getPosOffset();
-    int getAdressOffset();
+    Vec3i* getPosOffset();
+    int* getAdressOffset();
     void addLight(Light &light);
     Light* getLight(int pos)throw(InvalidValueException);
     int getUsedChannels();

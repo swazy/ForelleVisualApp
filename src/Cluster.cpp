@@ -20,6 +20,9 @@ const int MAX_DMX_CHANNELS = 512;
 Cluster::Cluster(){
     
     setUniverse(0);
+    startAdress = 0;
+    setPos(Vec3i(0,0,0));
+    this->name ="";
 
 }
 Cluster::Cluster(const string &name, int u){
@@ -31,12 +34,8 @@ Cluster::Cluster(const string &name, int u){
     
 }
 
-Group* Cluster::getGroupAt(int pos){
-    
-    if (pos < 0 || pos >= groups.size()) {
-        throw InvalidValueException( "Can't get Group. Channelposition out of Bounds.  At Group " + string(name), pos);
-    }
-    return &groups[pos];
+vector<Group>* Cluster::getGroups(){
+    return &groups;
 }
 
 void Cluster::addGroup( Group &group){
@@ -59,8 +58,8 @@ void Cluster::setName(string &name){
 void Cluster::setPos(Vec3i pos){
     this->pos = pos;
 }  
-Vec3i Cluster::getPos(){
-    return pos;
+Vec3i* Cluster::getPos(){
+    return &pos;
 }
 void Cluster::moveUp(int y){
     if(pos.y > 0)
@@ -83,9 +82,9 @@ void Cluster::moveRight(int x){
 
 }
 
-int Cluster::getUniverse(){
+int* Cluster::getUniverse(){
     
-    return universe;
+    return &universe;
     
 }
 void Cluster::setUniverse(int u)throw(InvalidValueException){
@@ -109,9 +108,9 @@ void Cluster::setStartAdress(int a){
     
     
 }
-int Cluster::getStartAdress(){
+int* Cluster::getStartAdress(){
     
-    return startAdress;
+    return &startAdress;
     
 }
 int Cluster::getUsedChannels(){
@@ -120,7 +119,7 @@ int Cluster::getUsedChannels(){
     //last pushed light adressoffset + amount of channels
     
     if(groups.size() > 0)
-        return groups.back().getAdressOffset() + groups.back().getUsedChannels();
+        return *groups.back().getAdressOffset() + groups.back().getUsedChannels();
     else
         return 0;
  
@@ -170,7 +169,7 @@ void Cluster::updateAndDrawCluster(Surface &surface){
             for(it3 = channels->begin(); it3 < channels->end(); it3++){
                 
                 //add all the offsets, to get the end pos of each channel
-                Vec2i pos = getPos().xy() + it->getPosOffset().xy() + it2->getPosOffset().xy() + it3->getPosOffset().xy();
+                Vec2i pos = getPos()->xy() + it->getPosOffset()->xy() + it2->getPosOffset()->xy() + it3->getPosOffset().xy();
                 // get the color of the pixel at pos
                 ColorA8u pixel = surface.getPixel(pos.xy());
                 
@@ -231,7 +230,7 @@ void Cluster::getChannelData(uint8_t *data){
                
                 // calculate real channel 
                 // first with channels in the light = i, + the offset of the light + the offset oh the group
-                channel = i + it2->getAdressOffset() + it->getAdressOffset() + getStartAdress();
+                channel = i + *it2->getAdressOffset() + *it->getAdressOffset() + *getStartAdress();
                 i++;
 
                 data[channel] = it3->getValue();

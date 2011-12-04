@@ -24,11 +24,11 @@ public:
     Cluster();
     Cluster(const string &name, int u);
     
-    Group* getGroupAt(int pos);
+    vector<Group>* getGroups();
     void addGroup( Group &group);
 
     void setPos(Vec3i pos);
-    Vec3i getPos();
+    Vec3i* getPos();
    
     string* getName();
     void setName(string &name);
@@ -38,11 +38,11 @@ public:
     void moveLeft(int x);
     void moveRight(int x);
 
-    int getUniverse();
+    int* getUniverse();
     void setUniverse(int u)throw(InvalidValueException);
     
     void setStartAdress(int a);
-    int  getStartAdress();
+    int*  getStartAdress();
     
     int getUsedChannels();
     void printUsedChannels();

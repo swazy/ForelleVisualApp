@@ -33,16 +33,16 @@ void Group::setAdressOffset(int a){
     
     
 }
-int Group::getAdressOffset(){
+int* Group::getAdressOffset(){
     
-    return adressOffset;
+    return &adressOffset;
     
 }
 void Group::setPosOffset(Vec3i posOffset){
     this->posOffset = posOffset;
 }
-Vec3i Group::getPosOffset(){
-    return posOffset;
+Vec3i* Group::getPosOffset(){
+    return &posOffset;
 }
 
 void Group::addLight( Light &light){
@@ -69,7 +69,7 @@ int Group::getUsedChannels(){
     //last pushed light adressoffset + amount of channels
 
     if(lights.size() > 0)
-        return lights.back().getAdressOffset() + lights.back().getAmountOfChannels();
+        return *lights.back().getAdressOffset() + lights.back().getAmountOfChannels();
     else
         return 0;
     

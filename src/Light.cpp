@@ -28,7 +28,7 @@ Light::Light(const string &name){
 Light::Light(){
     adressOffset = 0;
     amount++;
-    this->posOffset = Vec3i(0,0,0);
+    setPosOffset(Vec3i(0,0,0));
 
 }
 
@@ -95,8 +95,8 @@ void Light::setAdressOffset(int o){
     
 }
 
-int Light::getAdressOffset(){
-    return adressOffset;
+int* Light::getAdressOffset(){
+    return &adressOffset;
 }
 
 string* Light::getName(){
@@ -108,8 +108,8 @@ void Light::setPosOffset(Vec3i posOffset){
     this->posOffset = posOffset;
 }
 
-Vec3i Light::getPosOffset(){
-    return posOffset;
+const Vec3i* Light::getPosOffset(){
+    return &posOffset;
 }
 
 

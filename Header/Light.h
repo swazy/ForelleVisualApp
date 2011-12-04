@@ -31,12 +31,12 @@ public:
     vector<LightChannel>* getChannels();
     int  getAmountOfChannels();
     void setAdressOffset(int o);
-    int getAdressOffset();
+    int* getAdressOffset();
     void setChannelValue(const char* channel, int value)throw(InvalidValueException);
     char getSourceAt(int pos) throw(InvalidValueException,InvalidSourceException);
     int getValueAt(int pos) throw(InvalidValueException);
     void setPosOffset(Vec3i posOffset);
-    Vec3i getPosOffset();
+    const Vec3i* getPosOffset();
     string* getName();
     
     
