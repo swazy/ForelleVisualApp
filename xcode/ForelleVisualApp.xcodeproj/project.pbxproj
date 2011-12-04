@@ -23,6 +23,7 @@
 		FF32AFFE14893787009FDD2A /* InvalidSourceException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF32AFFD14893787009FDD2A /* InvalidSourceException.cpp */; };
 		FF5E6AAB1487EE84004EC6F0 /* XmlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF5E6AAA1487EE84004EC6F0 /* XmlParser.cpp */; };
 		FF66AE381487C5D400A47EBC /* LightChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF66AE371487C5D400A47EBC /* LightChannel.cpp */; };
+		FF823D79148B9347004EA6BF /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF823D78148B9347004EA6BF /* Controller.cpp */; };
 		FFA26C31148A6C79003798DE /* testbild.png in Resources */ = {isa = PBXBuildFile; fileRef = FFA26C30148A6C79003798DE /* testbild.png */; };
 		FFAA12631486A64E00B81814 /* artnet.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12501486A64E00B81814 /* artnet.Plo */; };
 		FFAA12641486A64E00B81814 /* misc.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12511486A64E00B81814 /* misc.Plo */; };
@@ -69,6 +70,8 @@
 		FF5E6AAD1487EEBF004EC6F0 /* XmlParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XmlParser.h; path = ../Header/XmlParser.h; sourceTree = "<group>"; };
 		FF66AE361487C43500A47EBC /* LightChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LightChannel.h; path = ../Header/LightChannel.h; sourceTree = "<group>"; };
 		FF66AE371487C5D400A47EBC /* LightChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LightChannel.cpp; path = ../src/LightChannel.cpp; sourceTree = "<group>"; };
+		FF823D78148B9347004EA6BF /* Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Controller.cpp; sourceTree = "<group>"; };
+		FF823D7B148B93C3004EA6BF /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Controller.h; path = ../Header/Controller.h; sourceTree = "<group>"; };
 		FFA26C2A148A2E79003798DE /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
 		FFA26C30148A6C79003798DE /* testbild.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testbild.png; sourceTree = "<group>"; };
 		FFAA12501486A64E00B81814 /* artnet.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artnet.Plo; sourceTree = "<group>"; };
@@ -133,6 +136,7 @@
 				FF5E6AAA1487EE84004EC6F0 /* XmlParser.cpp */,
 				FF32AFF914891FF4009FDD2A /* InvalidValueException.cpp */,
 				FF32AFFD14893787009FDD2A /* InvalidSourceException.cpp */,
+				FF823D78148B9347004EA6BF /* Controller.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -197,6 +201,7 @@
 				FF5E6AAD1487EEBF004EC6F0 /* XmlParser.h */,
 				FF32AFFC1489265A009FDD2A /* InvalidValueException.h */,
 				FF32AFFF14893797009FDD2A /* InvalidSourceException.h */,
+				FF823D7B148B93C3004EA6BF /* Controller.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -338,6 +343,7 @@
 				FF5E6AAB1487EE84004EC6F0 /* XmlParser.cpp in Sources */,
 				FF32AFFA14891FF4009FDD2A /* InvalidValueException.cpp in Sources */,
 				FF32AFFE14893787009FDD2A /* InvalidSourceException.cpp in Sources */,
+				FF823D79148B9347004EA6BF /* Controller.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
