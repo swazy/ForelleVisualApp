@@ -74,6 +74,12 @@ void XmlParser::loadTemplateClusterToUniverse(vector<Cluster> &destination, int 
             cluster.addGroup(group);
         }
         
+        if(!destination.empty()){
+       
+            int usedChannels = *destination.back().getStartAdress() + destination.back().getUsedChannels();
+            cluster.setStartAdress(usedChannels);
+       
+        }
         destination.push_back(cluster);
 
     }catch  (rapidxml::parse_error &e)
@@ -85,6 +91,6 @@ void XmlParser::loadTemplateClusterToUniverse(vector<Cluster> &destination, int 
         console() << e.what() << "Attribute not found" <<endl;
     }
     
-    
+    console() << "Cluster added" << endl;
 
 }
