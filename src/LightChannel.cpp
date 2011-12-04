@@ -35,8 +35,8 @@ LightChannel::LightChannel( const string &name,  char source)throw (InvalidSourc
 
     
 } 
-Vec3i LightChannel::getPosOffset(){
-    return posOffset;
+Vec3i* LightChannel::getPosOffset(){
+    return &posOffset;
 }
 void LightChannel::setPosOffset(Vec3i posOffset){
     this->posOffset = posOffset;

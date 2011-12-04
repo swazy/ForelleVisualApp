@@ -169,7 +169,7 @@ void Cluster::updateAndDrawCluster(Surface &surface){
             for(it3 = channels->begin(); it3 < channels->end(); it3++){
                 
                 //add all the offsets, to get the end pos of each channel
-                Vec2i pos = getPos()->xy() + it->getPosOffset()->xy() + it2->getPosOffset()->xy() + it3->getPosOffset().xy();
+                Vec2i pos = getPos()->xy() + it->getPosOffset()->xy() + it2->getPosOffset()->xy() + it3->getPosOffset()->xy();
                 // get the color of the pixel at pos
                 ColorA8u pixel = surface.getPixel(pos.xy());
                 
