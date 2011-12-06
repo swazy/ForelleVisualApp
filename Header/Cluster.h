@@ -23,7 +23,7 @@ private:
     string name;
     Vec3i pos;
     Boolean alreadyAdded;
-
+    string uniqueId;
     
 public:
     Cluster();
@@ -34,6 +34,9 @@ public:
 
     void setPos(Vec3i pos);
     Vec3i* getPos();
+    
+    void setId(string i);
+    string* getId();
    
     string* getName();
     void setName(string &name);

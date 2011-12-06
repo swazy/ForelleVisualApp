@@ -45,7 +45,13 @@ Boolean Cluster::getAdded(){
 void Cluster::added(){
     alreadyAdded = true;
 }
-
+void Cluster::setId(string i){
+    
+    uniqueId = i;
+}
+string* Cluster::getId(){
+    return &uniqueId;
+}
 
 void Cluster::addGroup( Group *group){
     
@@ -128,7 +134,7 @@ int Cluster::getUsedChannels(){
     //last pushed light adressoffset + amount of channels
     
     if(groups.size() > 0)
-        return (*groups.back()).getAdressOffset() + (*groups.back()).getUsedChannels();
+        return *(*groups.back()).getAdressOffset() + (*groups.back()).getUsedChannels();
     else
         return 0;
  
@@ -150,11 +156,11 @@ void Cluster::printCluster(){
         for(it2 = lights->begin(); it2 < lights->end(); it2++){
             
             console() << "\t\tLight  " << (*it2)->getName() <<endl;
-            vector<LightChannel> *channels = (*it2)->getChannels();
-            vector<LightChannel>::iterator it3;
+            vector<LightChannelRef> *channels = (*it2)->getChannels();
+            vector<LightChannelRef>::iterator it3;
             
             for(it3 = channels->begin(); it3 < channels->end(); it3++){
-                console() << "\t\t\tChannelSource  " << it3->getSource() << "  ChannelValue  " <<it3->getValue() << endl; 
+                console() << "\t\t\tChannelSource  " << (*it3)->getSource() << "  ChannelValue  " <<(*it3)->getValue() << endl; 
             }
             
         }
@@ -172,30 +178,30 @@ void Cluster::updateAndDrawCluster(Surface &surface){
         
         for(it2 = lights->begin(); it2 < lights->end(); it2++){
             
-            vector<LightChannel> *channels = (*it2)->getChannels();
-            vector<LightChannel>::iterator it3;
+            vector<LightChannelRef> *channels = (*it2)->getChannels();
+            vector<LightChannelRef>::iterator it3;
             
             for(it3 = channels->begin(); it3 < channels->end(); it3++){
                 
                 //add all the offsets, to get the end pos of each channel
-                Vec2i pos = getPos()->xy() + (*it)->getPosOffset()->xy() + (*it2)->getPosOffset()->xy() + it3->getPosOffset()->xy();
+                Vec2i pos = getPos()->xy() + (*it)->getPosOffset()->xy() + (*it2)->getPosOffset()->xy() + (*it3)->getPosOffset()->xy();
                 // get the color of the pixel at pos
                 ColorA8u pixel = surface.getPixel(pos.xy());
                 
                 try {
                                 
-                    switch (it3->getSource()) {
+                    switch (*(*it3)->getSource()) {
                         case 'R':
-                            it3->setValue(pixel.r);
+                            (*it3)->setValue(pixel.r);
                             break; 
                         case 'G':
-                            it3->setValue(pixel.g);
+                            (*it3)->setValue(pixel.g);
                             break; 
                         case 'B':
-                            it3->setValue(pixel.b);
+                            (*it3)->setValue(pixel.b);
                             break;
                         case 'A':
-                            it3->setValue(pixel.a);
+                            (*it3)->setValue(pixel.a);
                             break;
                             
                         default:
@@ -231,18 +237,18 @@ void Cluster::getChannelData(uint8_t *data){
         
         for(it2 = lights->begin(); it2 < lights->end(); it2++){
             
-            vector<LightChannel> *channels = (*it2)->getChannels();
-            vector<LightChannel>::iterator it3;
+            vector<LightChannelRef> *channels = (*it2)->getChannels();
+            vector<LightChannelRef>::iterator it3;
             //dont forget the channels
             int i = 0;
             for(it3 = channels->begin(); it3 < channels->end(); it3++){
                
                 // calculate real channel 
                 // first with channels in the light = i, + the offset of the light + the offset oh the group
-                channel = i + (*it2)->getAdressOffset() + (*it)->getAdressOffset() + *getStartAdress();
+                channel = i + *(*it2)->getAdressOffset() + *(*it)->getAdressOffset() + *getStartAdress();
                 i++;
 
-                data[channel] = it3->getValue();
+                data[channel] = (*it3)->getValue();
                 
             }
             
