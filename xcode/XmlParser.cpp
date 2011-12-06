@@ -27,6 +27,7 @@ void XmlParser::loadTemplateClusterToUniverse(vector<ClusterRef> &destination, i
    
     //catch mal-formed Xml Files
     try {
+     
         const XmlTree xml( loadFile( source ) );
 
         Cluster *cluster = new Cluster(xml.getChild("cluster").getAttributeValue<string>("name"), universe);
@@ -52,14 +53,14 @@ void XmlParser::loadTemplateClusterToUniverse(vector<ClusterRef> &destination, i
 
                 // Iterate through Channels
                 for( XmlTree::ConstIter channelIter = lightIter->begin(); channelIter != lightIter->end(); ++channelIter ) {
-                    LightChannel channel;
+                    LightChannel *channel;
                     try{
-                        channel = LightChannel(channelIter->getAttributeValue<string>("name"), channelIter->getAttributeValue<char>("source") );
+                        channel = new LightChannel(channelIter->getAttributeValue<string>("name"), channelIter->getAttributeValue<char>("source") );
                         int cx =channelIter->getAttributeValue<int>("xo");
                         int cy =channelIter->getAttributeValue<int>("yo");
                         int cz =channelIter->getAttributeValue<int>("zo");
                         
-                        channel.setPosOffset(Vec3i(cx,cy,cz));
+                        channel->setPosOffset(Vec3i(cx,cy,cz));
                         
                     }catch(InvalidSourceException& e){
                         throw rapidxml::parse_error( e.getMessage().c_str(), 0 );
@@ -136,16 +137,16 @@ void XmlParser::saveCurrent(vector<ClusterRef> &source ){
                 lightNode.setAttribute("yo",(*lightIter)->getPosOffset()->y);
                 lightNode.setAttribute("zo", (*lightIter)->getPosOffset()->z);
                 
-                vector<LightChannel> *channels = (*lightIter)->getChannels();
+                vector<LightChannelRef> *channels = (*lightIter)->getChannels();
                 // Iterate through Channels
-                for( vector<LightChannel>::iterator channelIter = channels->begin(); channelIter != channels->end(); ++channelIter ) {
+                for( vector<LightChannelRef>::iterator channelIter = channels->begin(); channelIter != channels->end(); ++channelIter ) {
 
                     XmlTree channelNode( "channel", "" );
-                    channelNode.setAttribute("name", *channelIter->getName());
-                    channelNode.setAttribute("source", channelIter->getSource());
-                    channelNode.setAttribute("xo", channelIter->getPosOffset()->x);
-                    channelNode.setAttribute("yo",channelIter->getPosOffset()->y);
-                    channelNode.setAttribute("zo", channelIter->getPosOffset()->z);
+                    channelNode.setAttribute("name", *(*channelIter)->getName());
+                    channelNode.setAttribute("source", *(*channelIter)->getSource());
+                    channelNode.setAttribute("xo", (*channelIter)->getPosOffset()->x);
+                    channelNode.setAttribute("yo",(*channelIter)->getPosOffset()->y);
+                    channelNode.setAttribute("zo", (*channelIter)->getPosOffset()->z);
                     lightNode.push_back(channelNode);
                 }
                 groupNode.push_back(lightNode);
@@ -210,14 +211,14 @@ void XmlParser::loadScene(vector<ClusterRef> &destination){
                 
                     // Iterate through Channels
                     for( XmlTree::ConstIter channelIter = lightIter->begin(); channelIter != lightIter->end(); ++channelIter ) {
-                        LightChannel channel;
+                        LightChannel *channel;
                         try{
-                            channel = LightChannel(channelIter->getAttributeValue<string>("name"), channelIter->getAttributeValue<char>("source") );
+                            channel = new LightChannel(channelIter->getAttributeValue<string>("name"), channelIter->getAttributeValue<char>("source") );
                             int cx =channelIter->getAttributeValue<int>("xo");
                             int cy =channelIter->getAttributeValue<int>("yo");
                             int cz =channelIter->getAttributeValue<int>("zo");
                             
-                            channel.setPosOffset(Vec3i(cx,cy,cz));
+                            channel->setPosOffset(Vec3i(cx,cy,cz));
                             
                         }catch(InvalidSourceException& e){
                             throw rapidxml::parse_error( e.getMessage().c_str(), 0 );

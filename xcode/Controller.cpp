@@ -60,5 +60,9 @@ void Controller::deleteSelectedCluster(vector<ClusterRef> &clusters, vector<Clus
         
         
         selectedCluster = clusters.erase(selectedCluster);
+        
+        if (selectedCluster == clusters.end()) {
+            selectedCluster = clusters.end()-1;
+        }
     }
 }
