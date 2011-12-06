@@ -23,6 +23,7 @@ Cluster::Cluster(){
     startAdress = 0;
     setPos(Vec3i(0,0,0));
     this->name ="";
+    alreadyAdded = false;
 
 }
 Cluster::Cluster(const string &name, int u){
@@ -31,19 +32,27 @@ Cluster::Cluster(const string &name, int u){
     this->name = name;
     startAdress = 0;
     setPos(Vec3i(0,0,0));
-    
+    alreadyAdded = false;
+
 }
 
-vector<Group>* Cluster::getGroups(){
+vector<GroupRef>* Cluster::getGroups(){
     return &groups;
 }
+Boolean Cluster::getAdded(){
+    return alreadyAdded;
+}
+void Cluster::added(){
+    alreadyAdded = true;
+}
 
-void Cluster::addGroup( Group &group){
+
+void Cluster::addGroup( Group *group){
     
    
     int usedChannels = getUsedChannels();
-    group.setAdressOffset(usedChannels);
-    groups.push_back(group);
+    group->setAdressOffset(usedChannels);
+    groups.push_back(GroupRef(group));
 
     
 }    
@@ -119,7 +128,7 @@ int Cluster::getUsedChannels(){
     //last pushed light adressoffset + amount of channels
     
     if(groups.size() > 0)
-        return *groups.back().getAdressOffset() + groups.back().getUsedChannels();
+        return (*groups.back()).getAdressOffset() + (*groups.back()).getUsedChannels();
     else
         return 0;
  
@@ -129,19 +138,19 @@ int Cluster::getUsedChannels(){
 
 void Cluster::printCluster(){
     
-    vector<Group>::iterator it;
+    vector<GroupRef>::iterator it;
     
     console() <<"ClusterName: " <<name <<endl;
     
-    for(it = groups.begin(); it < groups.end(); it++){
-        console() << "\tGroupName:  " << *it->getName() <<endl;
-        vector<Light> *lights = it->getLights();
-        vector<Light>::iterator it2;
+    for(it = groups.begin(); it != groups.end(); it++){
+        console() << "\tGroupName:  " << (*it)->getName() <<endl;
+        vector<LightRef> *lights = (*it)->getLights();
+        vector<LightRef>::iterator it2;
         
         for(it2 = lights->begin(); it2 < lights->end(); it2++){
             
-            console() << "\t\tLight  " << *it2->getName() <<endl;
-            vector<LightChannel> *channels = it2->getChannels();
+            console() << "\t\tLight  " << (*it2)->getName() <<endl;
+            vector<LightChannel> *channels = (*it2)->getChannels();
             vector<LightChannel>::iterator it3;
             
             for(it3 = channels->begin(); it3 < channels->end(); it3++){
@@ -154,22 +163,22 @@ void Cluster::printCluster(){
 void Cluster::updateAndDrawCluster(Surface &surface){
     
  
-    vector<Group>::iterator it;    
+    vector<GroupRef>::iterator it;    
     for(it = groups.begin(); it < groups.end(); it++){
         
        
-        vector<Light> *lights = it->getLights();
-        vector<Light>::iterator it2;
+        vector<LightRef> *lights = (*it)->getLights();
+        vector<LightRef>::iterator it2;
         
         for(it2 = lights->begin(); it2 < lights->end(); it2++){
             
-            vector<LightChannel> *channels = it2->getChannels();
+            vector<LightChannel> *channels = (*it2)->getChannels();
             vector<LightChannel>::iterator it3;
             
             for(it3 = channels->begin(); it3 < channels->end(); it3++){
                 
                 //add all the offsets, to get the end pos of each channel
-                Vec2i pos = getPos()->xy() + it->getPosOffset()->xy() + it2->getPosOffset()->xy() + it3->getPosOffset()->xy();
+                Vec2i pos = getPos()->xy() + (*it)->getPosOffset()->xy() + (*it2)->getPosOffset()->xy() + it3->getPosOffset()->xy();
                 // get the color of the pixel at pos
                 ColorA8u pixel = surface.getPixel(pos.xy());
                 
@@ -212,17 +221,17 @@ void Cluster::updateAndDrawCluster(Surface &surface){
 
 void Cluster::getChannelData(uint8_t *data){
     
-    vector<Group>::iterator it;
+    vector<GroupRef>::iterator it;
     int channel = 0;
 
     for(it = groups.begin(); it < groups.end(); it++){
         
-        vector<Light> *lights = it->getLights();
-        vector<Light>::iterator it2;
+        vector<LightRef> *lights = (*it)->getLights();
+        vector<LightRef>::iterator it2;
         
         for(it2 = lights->begin(); it2 < lights->end(); it2++){
             
-            vector<LightChannel> *channels = it2->getChannels();
+            vector<LightChannel> *channels = (*it2)->getChannels();
             vector<LightChannel>::iterator it3;
             //dont forget the channels
             int i = 0;
@@ -230,7 +239,7 @@ void Cluster::getChannelData(uint8_t *data){
                
                 // calculate real channel 
                 // first with channels in the light = i, + the offset of the light + the offset oh the group
-                channel = i + *it2->getAdressOffset() + *it->getAdressOffset() + *getStartAdress();
+                channel = i + (*it2)->getAdressOffset() + (*it)->getAdressOffset() + *getStartAdress();
                 i++;
 
                 data[channel] = it3->getValue();

@@ -13,7 +13,7 @@
 
 using namespace std;
 using namespace ci;
-
+typedef boost::shared_ptr<class LightChannel> LightChannelRef;
 class LightChannel{
     
     

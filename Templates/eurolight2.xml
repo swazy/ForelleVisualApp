@@ -6,16 +6,6 @@
 			<channel name="Green" source="G" xo="0" yo="0" zo="0"></channel>
 			<channel name="Blue" source="B" xo="0" yo="0" zo="0"></channel>
 		</light>
-        <light name="Light 02" address="" xo="0" yo="10" zo="0">
-			<channel name="Red" source="R" xo="0" yo="0" zo="0"></channel>
-			<channel name="Green" source="G" xo="0" yo="0" zo="0"></channel>
-			<channel name="Blue" source="B" xo="0" yo="0" zo="0"></channel>
-		</light>
-        <light name="Light 03" address="" xo="0" yo="20" zo="0">
-			<channel name="Red" source="R" xo="0" yo="0" zo="0"></channel>
-			<channel name="Green" source="G" xo="0" yo="0" zo="0"></channel>
-			<channel name="Blue" source="B" xo="0" yo="0" zo="0"></channel>
-		</light>
     </group>
 </cluster>
     

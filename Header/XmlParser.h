@@ -18,8 +18,8 @@ private:
 public:
     
     XmlParser();
-    void loadTemplateClusterToUniverse(vector<Cluster> &destination, int universe  ,const string &source);
-    void saveCurrent(vector<Cluster> &source);
-    void loadScene(vector<Cluster> &destination);
+    void loadTemplateClusterToUniverse(vector<ClusterRef> &destination, int universe  ,const string &source);
+    void saveCurrent(vector<ClusterRef> &source);
+    void loadScene(vector<ClusterRef> &destination);
     
 };

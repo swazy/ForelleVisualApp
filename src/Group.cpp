@@ -33,9 +33,9 @@ void Group::setAdressOffset(int a){
     
     
 }
-int* Group::getAdressOffset(){
+int Group::getAdressOffset(){
     
-    return &adressOffset;
+    return adressOffset;
     
 }
 void Group::setPosOffset(Vec3i posOffset){
@@ -45,23 +45,23 @@ Vec3i* Group::getPosOffset(){
     return &posOffset;
 }
 
-void Group::addLight( Light &light){
+void Group::addLight( Light *light){
     
     
     int usedChannels = getUsedChannels();
-    light.setAdressOffset(usedChannels);
-    lights.push_back(light);
+    light->setAdressOffset(usedChannels);
+    lights.push_back(LightRef(light));
     
 }
-Light* Group::getLight(int pos)throw(InvalidValueException){
-    
-    if(pos <0 || pos >= lights.size()){
-       throw InvalidValueException( "Can't get light. Pos out of Bounds. At Group " + string(name), pos);
-    }
-       else
-           return &lights.at(pos);
-    
-}
+//Light* Group::getLight(int pos)throw(InvalidValueException){
+//    
+//    if(pos <0 || pos >= lights.size()){
+//       throw InvalidValueException( "Can't get light. Pos out of Bounds. At Group " + string(name), pos);
+//    }
+//       else
+//           return &lights.at(pos);
+//    
+//}
 
 int Group::getUsedChannels(){
     
@@ -69,13 +69,13 @@ int Group::getUsedChannels(){
     //last pushed light adressoffset + amount of channels
 
     if(lights.size() > 0)
-        return *lights.back().getAdressOffset() + lights.back().getAmountOfChannels();
+        return (*lights.back()).getAdressOffset() + (*lights.back()).getAmountOfChannels();
     else
         return 0;
     
     
 }
-vector<Light>* Group::getLights(){
+vector<LightRef>* Group::getLights(){
     
     return &lights;
 }

@@ -9,6 +9,9 @@
 #define Cluster_H
 #include <vector>
 #include "Group.h"
+
+typedef boost::shared_ptr<class Cluster> ClusterRef;
+
 class Cluster{
   
     
@@ -16,17 +19,18 @@ private:
     
     int universe;
     int startAdress;;
-    std::vector<Group> groups;
+    std::vector<GroupRef> groups;
     string name;
     Vec3i pos;
-    
+    Boolean alreadyAdded;
+
     
 public:
     Cluster();
     Cluster(const string &name, int u);
-    
-    vector<Group>* getGroups();
-    void addGroup( Group &group);
+
+    vector<GroupRef>* getGroups();
+    void addGroup( Group *group);
 
     void setPos(Vec3i pos);
     Vec3i* getPos();
@@ -38,7 +42,8 @@ public:
     void moveDown(int y);
     void moveLeft(int x);
     void moveRight(int x);
-
+    Boolean getAdded();
+    void added();
     int* getUniverse();
     void setUniverse(int u)throw(InvalidValueException);
     

@@ -12,40 +12,39 @@ Controller::Controller(){
     
 }
 
-void Controller::printClusters(vector<Cluster> &clusters)
+void Controller::printClusters(vector<ClusterRef> &clusters)
 {    
-    vector<Cluster>::iterator it;
-    
+    vector<ClusterRef>::iterator it;
+
     for (it = clusters.begin(); it < clusters.end(); it++) {
-        
-        it->printCluster();
+
+        (*it)->printCluster();
         
     }
     
 }
-void Controller::updateAndDrawClusters(vector<Cluster> &clusters, Surface &surface){
+void Controller::updateAndDrawClusters(vector<ClusterRef> &clusters, Surface &surface){
     
-    vector<Cluster>::iterator it;
+    vector<ClusterRef>::iterator it;
     
     for (it = clusters.begin(); it < clusters.end(); it++) {
-        
-        it->updateAndDrawCluster(surface);        
+        (*it)->updateAndDrawCluster(surface);        
     }
     
     
 }
-void Controller::getData(vector<Cluster> &clusters, uint8_t *data){
+void Controller::getData(vector<ClusterRef> &clusters, uint8_t *data){
     
-    vector<Cluster>::iterator it;
+    vector<ClusterRef>::iterator it;
     
     for (it = clusters.begin(); it < clusters.end(); it++) {
         
-        it->getChannelData(data);        
+        (*it)->getChannelData(data);        
     }
     
     
 }
-void Controller::changeSelectedCluster(vector<Cluster> &clusters, vector<Cluster>::iterator &selectedCluster){
+void Controller::changeSelectedCluster(vector<ClusterRef> &clusters, vector<ClusterRef>::iterator &selectedCluster){
     
     if(!clusters.empty()){
         
@@ -55,7 +54,7 @@ void Controller::changeSelectedCluster(vector<Cluster> &clusters, vector<Cluster
             --selectedCluster;
     }
 }
-void Controller::deleteSelectedCluster(vector<Cluster> &clusters, vector<Cluster>::iterator &selectedCluster){
+void Controller::deleteSelectedCluster(vector<ClusterRef> &clusters, vector<ClusterRef>::iterator &selectedCluster){
     
     if(!clusters.empty()){
         
