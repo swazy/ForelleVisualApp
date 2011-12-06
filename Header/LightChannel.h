@@ -21,14 +21,15 @@ class LightChannel{
 private: 
     
     int value;
-    char source;
+    string source;
     string name;
     Vec3i posOffset;
 public:
     LightChannel();
     LightChannel( const string &name,  char source)throw (InvalidSourceException);
     int getValue();
-    char getSource();
+    char* getSource();
+    string* getSourceAsString();
     void setValue(int value)throw(InvalidValueException);
     void setSource( const char &source)throw(InvalidSourceException);
     string* getName();

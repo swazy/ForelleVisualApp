@@ -19,7 +19,7 @@ class Light{
     
 private: 
     
-    vector<LightChannel> lightChannels;  
+    vector<LightChannelRef> lightChannels;  
     static int amount;
     int adressOffset;
     string name;
@@ -28,12 +28,12 @@ private:
 public:
     Light();
     Light(const string &name);
-    void setChannels(vector<LightChannel> & channels);
-    void addChannel(LightChannel &channel);
-    vector<LightChannel>* getChannels();
+    void setChannels(vector<LightChannelRef> & channels);
+    void addChannel(LightChannel *channel);
+    vector<LightChannelRef>* getChannels();
     int  getAmountOfChannels();
     void setAdressOffset(int o);
-    int getAdressOffset();
+    int* getAdressOffset();
     void setChannelValue(const char* channel, int value)throw(InvalidValueException);
     char getSourceAt(int pos) throw(InvalidValueException,InvalidSourceException);
     int getValueAt(int pos) throw(InvalidValueException);

@@ -14,7 +14,7 @@
 LightChannel::LightChannel(){
     
     value = 0;
-    source = '0';
+    source = "";
     name = "";
     posOffset = Vec3i(0,0,0);
     
@@ -24,7 +24,7 @@ LightChannel::LightChannel(){
 LightChannel::LightChannel( const string &name,  char source)throw (InvalidSourceException){
     
 
-    if(source == 'R' || source == 'G' || source == 'B' || source == 'A' )
+    if(strcmp(&source,"R") || strcmp(&source,"G") || strcmp(&source,"B") || strcmp(&source,"A") )
         this->source = source;
     else
         throw InvalidSourceException("Source must be R,G,B or A ", source);
@@ -48,8 +48,15 @@ int LightChannel::getValue(){
 string* LightChannel::getName(){
     return &name;
 }
-char LightChannel::getSource(){
-    return source;
+char* LightChannel::getSource(){
+    char * buffer = new char[source.length()];
+    strcpy(buffer,source.c_str());
+    
+    return &buffer[0];
+}
+
+string* LightChannel::getSourceAsString(){
+    return &source;
 }
 void LightChannel::setValue(int value)throw(InvalidValueException){
     
