@@ -3,9 +3,7 @@
 	<group name="Eurolight" address="" xo="0" yo="0" zo="0">
 		<light name="Light01" address="" xo="0" yo="0" zo="0">
 			<channel name="Red" source="R" xo="0" yo="0" zo="0"></channel>
-			<channel name="Green" source="G" xo="10" yo="0" zo="0"></channel>
-			<channel name="Blue" source="B" xo="20" yo="0" zo="0"></channel>
-		</light>
+        </light>
     </group>
 </cluster>
     

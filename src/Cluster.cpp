@@ -166,7 +166,7 @@ void Cluster::printCluster(){
         }
     }
 } 
-void Cluster::updateAndDrawCluster(Surface &surface, Vec2i imagePosOffset){
+void Cluster::updateAndDrawCluster(Surface &surface, Vec2i imagePosOffset, int scale){
     
  
     vector<GroupRef>::iterator it;    
@@ -187,7 +187,7 @@ void Cluster::updateAndDrawCluster(Surface &surface, Vec2i imagePosOffset){
                 Vec2i pos = getPos()->xy() + (*it)->getPosOffset()->xy() + (*it2)->getPosOffset()->xy() + (*it3)->getPosOffset()->xy();
                 // get the color of the pixel at pos
                 ColorA8u pixel = surface.getPixel(pos.xy());
-                console() << "pos= " << pos << endl;
+                console() << "pixelvalue= " <<(int) surface.getPixel(Vec2i(10,10)).r << endl;
                 try {
                                 
                     switch (*(*it3)->getSource()) {
@@ -214,8 +214,8 @@ void Cluster::updateAndDrawCluster(Surface &surface, Vec2i imagePosOffset){
 
                 //draw each channel 
                 // when resize syphone image draw circles on the rigth position
-                gl::color(0.0f, 0.0f, 0.0f);
-                gl::drawSolidCircle(pos.xy()+imagePosOffset, 4.0f);
+                gl::color(0.0f, 1.0f, 0.0f);
+                gl::drawSolidCircle((pos.xy()*scale)+imagePosOffset, 4.0f);
                 gl::color(1.0f, 1.0f, 1.0f);
                          
             }

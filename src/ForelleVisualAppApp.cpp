@@ -58,7 +58,8 @@ class ForelleVisualAppApp : public AppBasic {
     SClient client;
 
     // position and size of the syphone image
-    Vec2i pos, size;
+    Vec2i pos;
+    int scale;
    
     
 };
@@ -110,7 +111,7 @@ void ForelleVisualAppApp::setup()
     // initalize start our Syphone Client
     client.setup(Vec2i(60,60));
     pos = Vec2i(0,0);
-    size = Vec2i(60, 60);
+    scale = 1;
 
 
 }
@@ -124,13 +125,13 @@ void ForelleVisualAppApp::keyDown( KeyEvent event )
 		(*selectedCluster)->moveUp(1);
 	}
 	else if( event.getCode() == app::KeyEvent::KEY_DOWN && !clusters.empty()) {
-            (*selectedCluster)->moveDown(10);
+            (*selectedCluster)->moveDown(1);
 	}
     else if( event.getCode() == app::KeyEvent::KEY_LEFT && !clusters.empty() ) {
-              (*selectedCluster)->moveLeft(10);
+              (*selectedCluster)->moveLeft(1);
     }
     else if( event.getCode() == app::KeyEvent::KEY_RIGHT && !clusters.empty()) {
-        (*selectedCluster)->moveRight(10);
+        (*selectedCluster)->moveRight(1);
     }
     else if( event.getCode() == app::KeyEvent::KEY_TAB ) {
         controller.changeSelectedCluster(clusters, selectedCluster);
@@ -177,13 +178,10 @@ void ForelleVisualAppApp::keyDown( KeyEvent event )
     if(event.getCode() == '6')
         pos.x +=10;
     if(event.getCode() == app::KeyEvent::KEY_KP_PLUS ){
-        size.x *=2;
-        size.y *=2;
-        console() <<"fdasd" << endl;
+        scale++;
     }
     if(event.getCode() == app::KeyEvent::KEY_m){
-        size.x /=2;
-        size.y /=2;
+        scale--;
     }
 
 
@@ -213,24 +211,24 @@ void ForelleVisualAppApp::draw()
         // stick together  with draw;
         client.update();
         //draw the Image from the client
-        gl::draw( *client.getTexture(), Rectf(pos.x,pos.y,pos.x+size.x,pos.y+size.y));
+        gl::draw( *client.getTexture(), Rectf(pos.x,pos.y,pos.x+(60*scale),pos.y+(60*scale)));
     
     
     // draw Pixel grid
-//    gl::color( Colorf(1.0f, 1.0f, 1.0f) );
-//    gl::pushMatrices();
-//    gl::translate(pos);
-//	for(float i=0;i<=size.x;i+=(size.x/60)) {
-//		gl::drawLine( Vec2f(i,  0), Vec2f(i,  size.x) );
-//		gl::drawLine( Vec2f(0,  i), Vec2f(size.x,  i) );
-//	}
-//    gl::popMatrices();
+    gl::color( Colorf(1.0f, 1.0f, 1.0f) );
+    gl::pushMatrices();
+    gl::translate(pos);
+	for(float i=0;i<=60*scale;i+=scale) {
+		gl::drawLine( Vec2f(i,  0), Vec2f(i,  60*scale) );
+		gl::drawLine( Vec2f(0,  i), Vec2f(60*scale,  i) );
+	}
+    gl::popMatrices();
 
 
 
    
     //   if(readPixels)
-    controller.updateAndDrawClusters(clusters, *client.getSurface(), pos);
+    controller.updateAndDrawClusters(clusters, *client.getSurface(), pos, scale);
     controller.getData(clusters,data);
        
     //  if(sendData)

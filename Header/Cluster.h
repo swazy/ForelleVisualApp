@@ -59,7 +59,7 @@ public:
    
     void printCluster();
     void getChannelData(uint8_t *data);
-    void updateAndDrawCluster(Surface &surface, Vec2i imagePosOffset);
+    void updateAndDrawCluster(Surface &surface, Vec2i imagePosOffset, int scale);
 
     
 }; 

@@ -23,12 +23,12 @@ void Controller::printClusters(vector<ClusterRef> &clusters)
     }
     
 }
-void Controller::updateAndDrawClusters(vector<ClusterRef> &clusters, Surface &surface,  Vec2i imagePosOffset){
+void Controller::updateAndDrawClusters(vector<ClusterRef> &clusters, Surface &surface,  Vec2i imagePosOffset, int scale){
     
     vector<ClusterRef>::iterator it;
     
     for (it = clusters.begin(); it < clusters.end(); it++) {
-        (*it)->updateAndDrawCluster(surface,imagePosOffset );        
+        (*it)->updateAndDrawCluster(surface,imagePosOffset, scale );        
     }
     
     

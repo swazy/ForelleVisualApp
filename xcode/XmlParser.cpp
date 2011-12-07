@@ -31,7 +31,7 @@ void XmlParser::loadTemplateClusterToUniverse(vector<ClusterRef> &destination, i
         const XmlTree xml( loadFile( source ) );
 
         Cluster *cluster = new Cluster(xml.getChild("cluster").getAttributeValue<string>("name"), universe);
-        cluster->setPos(  Vec3i( getWindowWidth()/2 -300, getWindowHeight()/2,0));
+        cluster->setPos(  Vec3i(10, 10,0));
 
         // Iterate through Groups
         for( XmlTree::ConstIter groupIter = xml.begin("/cluster/group"); groupIter != xml.end(); ++groupIter ) {

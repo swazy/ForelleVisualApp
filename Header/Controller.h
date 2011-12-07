@@ -17,7 +17,7 @@ class Controller{
 public:
     Controller();
     void printClusters(vector<ClusterRef> &clusters);
-    void updateAndDrawClusters(vector<ClusterRef> &clusters, Surface &surface,  Vec2i imagePosOffset);
+    void updateAndDrawClusters(vector<ClusterRef> &clusters, Surface &surface,  Vec2i imagePosOffset, int scale);
     void getData(vector<ClusterRef> &clusters, uint8_t *data);
     void changeSelectedCluster(vector<ClusterRef>&clusters, vector<ClusterRef>::iterator &selectedCluster);
     void deleteSelectedCluster(vector<ClusterRef> &clusters, vector<ClusterRef>::iterator &selectedCluster);

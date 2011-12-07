@@ -18,7 +18,7 @@ void SClient::setup(Vec2i size){
     
 	// in order for this to work, you must run simple server from the testapps directory
 	// any other syphon item you create would work as well, just change the name
-    mClientSyphon.setApplicationName("Simple Server");
+    mClientSyphon.setApplicationName("Quartz Composer");
     mClientSyphon.setServerName("");
 	
 	mClientSyphon.bind();
