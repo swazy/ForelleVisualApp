@@ -24,6 +24,7 @@
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		53E3CDFC0E86099300238D2B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E3CDFB0E86099300238D2B /* Carbon.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		FF1B06D0148FBCE1004FCAD6 /* ClusterBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1B06CF148FBCE1004FCAD6 /* ClusterBar.cpp */; };
 		FF32AFFA14891FF4009FDD2A /* InvalidValueException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF32AFF914891FF4009FDD2A /* InvalidValueException.cpp */; };
 		FF32AFFE14893787009FDD2A /* InvalidSourceException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF32AFFD14893787009FDD2A /* InvalidSourceException.cpp */; };
 		FF5E6AAB1487EE84004EC6F0 /* XmlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF5E6AAA1487EE84004EC6F0 /* XmlParser.cpp */; };
@@ -46,6 +47,7 @@
 		FFB89F2514865D590029BF84 /* Cluster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB89F2214865D590029BF84 /* Cluster.cpp */; };
 		FFB89F2614865D590029BF84 /* Group.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB89F2314865D590029BF84 /* Group.cpp */; };
 		FFB89F2714865D590029BF84 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB89F2414865D590029BF84 /* Light.cpp */; };
+		FFE86ACF148FDD69007D96F5 /* SClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFE86ACE148FDD69007D96F5 /* SClient.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -89,6 +91,8 @@
 		53E3CDFB0E86099300238D2B /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* ForelleVisualApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ForelleVisualApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF1B06CF148FBCE1004FCAD6 /* ClusterBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClusterBar.cpp; sourceTree = "<group>"; };
+		FF1B06D4148FBD05004FCAD6 /* ClusterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClusterBar.h; path = ../Header/ClusterBar.h; sourceTree = "<group>"; };
 		FF32AFF914891FF4009FDD2A /* InvalidValueException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InvalidValueException.cpp; sourceTree = "<group>"; };
 		FF32AFFC1489265A009FDD2A /* InvalidValueException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InvalidValueException.h; path = ../Header/InvalidValueException.h; sourceTree = "<group>"; };
 		FF32AFFD14893787009FDD2A /* InvalidSourceException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InvalidSourceException.cpp; path = ../src/InvalidSourceException.cpp; sourceTree = "<group>"; };
@@ -128,6 +132,8 @@
 		FFB89F2214865D590029BF84 /* Cluster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cluster.cpp; path = ../src/Cluster.cpp; sourceTree = "<group>"; };
 		FFB89F2314865D590029BF84 /* Group.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Group.cpp; path = ../src/Group.cpp; sourceTree = "<group>"; };
 		FFB89F2414865D590029BF84 /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Light.cpp; path = ../src/Light.cpp; sourceTree = "<group>"; };
+		FFE86ACC148FD533007D96F5 /* SClient.h */ = {isa = PBXFileReference; fileEncoding = 4; name = SClient.h; path = ../Header/SClient.h; sourceTree = "<group>"; };
+		FFE86ACE148FDD69007D96F5 /* SClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SClient.cpp; path = ../src/SClient.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,12 +165,14 @@
 				FFB89F2314865D590029BF84 /* Group.cpp */,
 				FFB89F2414865D590029BF84 /* Light.cpp */,
 				00BAE6590E7ED9C10018A608 /* ForelleVisualAppApp.cpp */,
+				FF1B06CF148FBCE1004FCAD6 /* ClusterBar.cpp */,
 				FFAA12701486A87100B81814 /* CinderArtnet.cpp */,
 				FF66AE371487C5D400A47EBC /* LightChannel.cpp */,
 				FF5E6AAA1487EE84004EC6F0 /* XmlParser.cpp */,
 				FF32AFF914891FF4009FDD2A /* InvalidValueException.cpp */,
 				FF32AFFD14893787009FDD2A /* InvalidSourceException.cpp */,
 				FF823D78148B9347004EA6BF /* Controller.cpp */,
+				FFE86ACE148FDD69007D96F5 /* SClient.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -271,6 +279,8 @@
 				FF32AFFC1489265A009FDD2A /* InvalidValueException.h */,
 				FF32AFFF14893797009FDD2A /* InvalidSourceException.h */,
 				FF823D7B148B93C3004EA6BF /* Controller.h */,
+				FF1B06D4148FBD05004FCAD6 /* ClusterBar.h */,
+				FFE86ACC148FD533007D96F5 /* SClient.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -418,6 +428,8 @@
 				0D90A884148D605700330454 /* SyphonNameboundClient.m in Sources */,
 				0D90A885148D605700330454 /* syphonClient.mm in Sources */,
 				0D90A886148D605700330454 /* syphonServer.mm in Sources */,
+				FF1B06D0148FBCE1004FCAD6 /* ClusterBar.cpp in Sources */,
+				FFE86ACF148FDD69007D96F5 /* SClient.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

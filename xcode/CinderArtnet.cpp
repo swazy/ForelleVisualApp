@@ -19,7 +19,7 @@ CinderArtnet::CinderArtnet(){
 CinderArtnet::CinderArtnet(string  name, string  longName, string ip_adress)   
 {       
     //Address to send from
-    node = artnet_new(ip_adress.c_str(), 3);
+    node = artnet_new(ip_adress.c_str(), 0);
     // Set name of the node
     artnet_set_long_name(node, longName.c_str());
     artnet_set_short_name(node, name.c_str());

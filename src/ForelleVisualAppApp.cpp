@@ -8,7 +8,8 @@
 #include "cinder/ImageIo.h"
 #include "cinder/params/Params.h"
 #include "Controller.h"
-#include "cinderSyphon.h"
+#include "ClusterBar.h"
+#include "SClient.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -25,13 +26,17 @@ class ForelleVisualAppApp : public AppBasic {
 	void draw();
     void prepareSettings( Settings *settings );
     void keyDown( KeyEvent event );
-    void loadParameters(vector<ClusterRef> &clusters, params::InterfaceGl mParams);
-    void loadParametersFromCluster( ClusterRef cluster, params::InterfaceGl mParams);
-    //  void getPixelValue(vector<Cluster> &clusters);
+
+    // store our clusters 
     vector<ClusterRef> clusters;
    
+    // array for the data of the 512 DMX channels
     uint8_t data[512];
+    
+    //Artnet node where we send our data
     CinderArtnet node;
+    
+    // xmlparser so read and write templates and scenes
     XmlParser parser;
   
     
@@ -43,13 +48,18 @@ class ForelleVisualAppApp : public AppBasic {
     //selected cluster
     vector<ClusterRef>::iterator selectedCluster;
     
-    // Parameter Window
-    params::InterfaceGl		mParams;
+    // ClusterBar which shows all added Clusters
+    ClusterBar clusterBar;
     
     //Controller to manage Clusters
     Controller controller;
+    
+    // Our syphoneClient
+    SClient client;
 
-
+    // position and size of the syphone image
+    Vec2i pos, size;
+   
     
 };
 void ForelleVisualAppApp::prepareSettings( Settings *settings )
@@ -62,19 +72,8 @@ void ForelleVisualAppApp::prepareSettings( Settings *settings )
 void ForelleVisualAppApp::setup()
 {
     // Setup the parameters
-    mParams =  params::InterfaceGl( "App parameters", Vec2i( 200, 400 ) );
+    clusterBar =  ClusterBar( "Cluster Window", Vec2i( 200, 400 ) );
 
-    
-//	mParams.addParam( "Cube Size", &mObjSize, "min=0.1 max=20.5 step=0.5 keyIncr=z keyDecr=Z" );
-//	mParams.addParam( "Cube Rotation", &mObjOrientation );
-//	mParams.addParam( "Cube Color", &mColor, "" );	
-//	mParams.addSeparator();	
-//	mParams.addParam( "Light Direction", &mLightDirection, "" );
-//	mParams.addButton( "Button!", std::bind( &TweakBarApp::button, this ) );
-//	mParams.addParam( "String ", &mString, "" );
-	
-       
-    
     //othe way to initialsie with 0, and don´t have to update ??
     for (int i=0; i < Const::MAX_DMX_CHANNELS ; i++) {
         data[i]= 0;
@@ -82,14 +81,15 @@ void ForelleVisualAppApp::setup()
     }
 
     //setup boolean variables
-    
     readPixels = true;
     sendData  = true;
+    
     //  parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight.xml");
  //   parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight2.xml");
  
-    surface = Surface( loadImage(loadResource(RES_IMAGE) ));
+   // surface = Surface( loadImage(loadResource(RES_IMAGE) ));
 
+    // set our pointer to the last added cluster
     if(!clusters.empty())
         selectedCluster = clusters.end()-1;
          
@@ -97,14 +97,20 @@ void ForelleVisualAppApp::setup()
     controller.printClusters(clusters);
     // loadParameters(clusters, mParams);
 
-    node = CinderArtnet("Art-Net Test", "LongName", "10.0.2.1");
+    
+    //Setup Artnetnode
+    node = CinderArtnet("Art-Net Test", "LongName", "10.0.2.2");
     node.setNodeTypeAsServer();
     node.setSubnetAdress(0);
-     node.enableDMXPortAsInputAndSetAdress(0,1);
-     node.enableDMXPortAsInputAndSetAdress(1, 2);
+    node.enableDMXPortAsInputAndSetAdress(0,1);
+   // node.enableDMXPortAsInputAndSetAdress(1, 2);
     node.printConfig();
-
     node.startNode();
+    
+    // initalize start our Syphone Client
+    client.setup(Vec2i(60,60));
+    pos = Vec2i(0,0);
+    size = Vec2i(60, 60);
 
 
 }
@@ -134,14 +140,14 @@ void ForelleVisualAppApp::keyDown( KeyEvent event )
         //TODO catch exception here, or other way to point an iterator
         parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight.xml");
     //    mParams =   params::InterfaceGl( "App parameters", Vec2i( 200, 400 ) );
-      loadParameters(clusters, mParams);
+      clusterBar.loadParameters(clusters);
 
         // if this is the first element in the vector, set Iterator new
        // if(clusters.size() == 1)
             selectedCluster = clusters.end()-1;
     } else if( event.getCode() == 'd' && !clusters.empty()  ) {
         
-        mParams.removeVar(*(*selectedCluster)->getId());
+        clusterBar.removeVar((*selectedCluster)->getId());
         controller.deleteSelectedCluster(clusters, selectedCluster);
       //  loadParameters(clusters, mParams); 
    
@@ -152,11 +158,34 @@ void ForelleVisualAppApp::keyDown( KeyEvent event )
     }else if( event.getCode() == 'l' ) {
         parser.loadScene(clusters);
         selectedCluster = clusters.end()-1;
-        loadParameters(clusters, mParams);
+        clusterBar.loadParameters(clusters);
     }else if( event.getCode() == 'c' ) {
         clusters.clear();
-        mParams.removeAllVar();
+       clusterBar.removeAllVar();
     } 
+    
+    if(event.getCode() == app::KeyEvent::KEY_ESCAPE)
+        setFullScreen(false);
+	if(event.getCode() == 'f')
+        setFullScreen(true);
+    if(event.getCode() == '8')
+        pos.y -=10;
+    if(event.getCode() == '5')
+        pos.y +=10;
+    if(event.getCode() == '4')
+        pos.x -=10;
+    if(event.getCode() == '6')
+        pos.x +=10;
+    if(event.getCode() == app::KeyEvent::KEY_KP_PLUS ){
+        size.x *=2;
+        size.y *=2;
+        console() <<"fdasd" << endl;
+    }
+    if(event.getCode() == app::KeyEvent::KEY_m){
+        size.x /=2;
+        size.y /=2;
+    }
+
 
 }
 
@@ -167,7 +196,9 @@ void ForelleVisualAppApp::update()
         data[i]=0;
 
     }
-
+    
+    
+  
 }
 
 void ForelleVisualAppApp::draw()
@@ -176,186 +207,40 @@ void ForelleVisualAppApp::draw()
 	gl::clear( Color(0, 0,0 ) ); 
   	
     
-    if( surface)
-		gl::draw( surface, Vec2f( 0, 0 ) );
     
+   // if( surface)
+        //update our Client
+        // stick together  with draw;
+        client.update();
+        //draw the Image from the client
+        gl::draw( *client.getTexture(), Rectf(pos.x,pos.y,pos.x+size.x,pos.y+size.y));
+    
+    
+    // draw Pixel grid
+//    gl::color( Colorf(1.0f, 1.0f, 1.0f) );
+//    gl::pushMatrices();
+//    gl::translate(pos);
+//	for(float i=0;i<=size.x;i+=(size.x/60)) {
+//		gl::drawLine( Vec2f(i,  0), Vec2f(i,  size.x) );
+//		gl::drawLine( Vec2f(0,  i), Vec2f(size.x,  i) );
+//	}
+//    gl::popMatrices();
+
+
+
+   
     //   if(readPixels)
-       controller.updateAndDrawClusters(clusters, surface);
+    controller.updateAndDrawClusters(clusters, *client.getSurface(), pos);
     controller.getData(clusters,data);
        
     //  if(sendData)
-        node.sendDataAtPort(data, 2);
-    
-    
+        node.sendDataAtPort(data, 0);
+      
     // Draw the interface
-	params::InterfaceGl::draw();
+	clusterBar.draw();
 	
 
 
-}
-void ForelleVisualAppApp::loadParametersFromCluster( ClusterRef cluster, params::InterfaceGl mParams){
- 
-    stringstream cc;
-    
-    cc << getElapsedSeconds();
-    console() << cc.str() << endl;
-    mParams.addParam( "" , cluster->getName(), "label=`Name` group="+*cluster->getName()+cc.str() );
-    mParams.addParam( "" , &cluster->getPos()->x, "label=`X` group="+*cluster->getName()+cc.str() );	
-    mParams.addParam( "" , &cluster->getPos()->y, "label=`Y` group="+*cluster->getName()+cc.str());
-    mParams.addParam( "" , cluster->getStartAdress(), "label=`StartAdress` group="+*cluster->getName()+cc.str());    
-    mParams.addParam( "" , cluster->getUniverse(), "label=`Universe` group="+*cluster->getName()+cc.str() ); 
-    mParams.setOptions( *cluster->getName()+cc.str() , "label=`" +*cluster->getName() +"` "+ "opened=false" );
-    cluster->added();
-    cluster->setId( (*cluster->getName())+cc.str());
-
-    vector<GroupRef> *groups = cluster->getGroups();
-    vector<GroupRef>::iterator it;
-    stringstream gg;
-
-    for(it = groups->begin(); it < groups->end(); it++){
-        
-        gg.str(std::string());
-        gg << getElapsedSeconds();
-        
-        string groupName = *(*it)->getName();
-        mParams.addParam( "" , &(*it)->getPosOffset()->x, "label=`x-offset` group="+groupName+gg.str() );    
-        mParams.addParam( "" , &(*it)->getPosOffset()->y, "label=`y-offset` group="+groupName+gg.str() );    
-        mParams.addParam( "" , (*it)->getAdressOffset(), "label=`Adressoffset`  group="+groupName+gg.str()  );    
-        mParams.setOptions( groupName+gg.str() , " group="+*cluster->getName()+cc.str()+" label=`" +*(*it)->getName() +"` "+ " opened=false");
-        
-        
-        vector<LightRef> *lights = (*it)->getLights();
-        vector<LightRef>::iterator it2;
-        stringstream ll;
-
-        for(it2 = lights->begin(); it2 < lights->end(); it2++){
-            
-            ll.str(std::string());
-            ll << getElapsedSeconds();
-            
-            string lightName = *(*it2)->getName();
-            
-            mParams.addParam( "" , &(*it2)->getPosOffset()->x, "label=`x-Offset` group="+lightName+ll.str() );    
-            mParams.addParam( "" , &(*it2)->getPosOffset()->y, "label=`y-Offset` group="+lightName+ll.str() );    
-            mParams.addParam( "" , (*it2)->getAdressOffset(),  "label=`Adressoffset` group="+lightName+ll.str() );    
-            mParams.setOptions( lightName+ll.str() , " group="+groupName+gg.str()+" label=`" +lightName +"` "+ " opened=false");
-            
-            vector<LightChannelRef> *channels = (*it2)->getChannels();
-            vector<LightChannelRef>::iterator it3;
-            stringstream lc;
-            
-            for(it3 = channels->begin(); it3 < channels->end(); it3++){
-                
-                lc.str(std::string());
-                lc << getElapsedSeconds();
-                
-                string channelName = *(*it3)->getName();
-                stringstream source;
-                source << (*it3)->getSource();
-                mParams.addParam( "" , &(*it3)->getPosOffset()->x, "label=`x-Offset` group="+channelName+lc.str() );    
-                mParams.addParam( "" , &(*it3)->getPosOffset()->y, "label=`y-Offset` group="+channelName+lc.str() );    
-                mParams.addParam( "" , (*it3)->getSourceAsString(),  "label=`Source` readonly=true group="+channelName+lc.str());    
-                mParams.setOptions( channelName+lc.str() , " group="+lightName+ll.str()+" label=`" +channelName+"` "+ " opened=false");
-            }
-
-        }
-    }
-        
-}
-    
-    
-
-
-void ForelleVisualAppApp::loadParameters(vector<ClusterRef> &clusters, params::InterfaceGl mParams){
-   
-    vector<ClusterRef>::iterator it;
-    for (it = clusters.begin(); it < clusters.end(); it++) {
-        if((*it)->getAdded())
-            console() <<"true" << endl;
-        else
-            console() <<"false" << endl;
-        
-        if((*it)->getAdded())
-            continue;
-
-        loadParametersFromCluster(*it , mParams);
-    
-    
-    }
-
-    
-    
-    
-    
-
-//    vector<ClusterRef>::iterator it;
-//    int c = 0, g= 0, l = 0;
-//    stringstream cc,gg,ll;
-//    
-//    for (it = clusters.begin(); it < clusters.end(); it++) {
-//        cc.str(std::string());
-//        string clusterName = *(*it)->getName();
-//        cc << c;
-//        
-//        if((*it)->getAdded())
-//        console() <<"true" << endl;
-//        else
-//            console() <<"false" << endl;
-//
-//        if((*it)->getAdded()){
-//            c++;
-//            continue;
-//        }
-//       
-//        console() <<"c= " << c<< endl;
-//
-//            mParams.addParam( clusterName+cc.str()+"name", (*it)->getName(), "label=`Name` group="+clusterName+cc.str() );
-//            mParams.addParam( cc.str()+"x" , &(*it)->getPos()->x, "label=`X` group="+clusterName+cc.str() );	
-//            mParams.addParam( cc.str()+"y" , &(*it)->getPos()->y, "label=`Y` group="+clusterName+cc.str() );
-//            mParams.addParam( cc.str()+"StartAdress" , (*it)->getStartAdress(), "label=`StartAdress` group="+clusterName+cc.str() );    
-//            mParams.addParam( cc.str()+"Universe" , (*it)->getUniverse(), "label=`Universe` group="+clusterName+cc.str() );    
-//                (*it)->added();
-            
-//            vector<GroupRef> *groups = (*it)->getGroups();
-//            vector<GroupRef>::iterator it2;
-//            
-//            for(it2 = groups->begin(); it2 < groups->end(); it2++){
-//                gg.str(std::string());
-//                gg << g;
-//                string groupName = *(*it2)->getName();
-//                mParams.addParam( cc.str()+gg.str()+"Xoffset" , &(*it2)->getPosOffset()->x, "label=`XOffset` group="+groupName+gg.str()+cc.str() );    
-//                mParams.addParam( cc.str()+gg.str()+"Yoffset" , &(*it2)->getPosOffset()->y, "label=`YOffset` group="+groupName+gg.str()+cc.str() );    
-//            //    mParams.addParam( "AdressOffset" , it2->getAdressOffset(), "group="+groupName );    
-//                mParams.setOptions( groupName+gg.str()+cc.str() , " group="+clusterName+cc.str()+" opened=false");
-//                
-    //            
-    //            vector<LightRef> *lights = (*it2)->getLights();
-    //            vector<LightRef>::iterator it3;
-    //            
-    //            for(it3 = lights->begin(); it3 < lights->end(); it3++){
-    //                ll.str(std::string());
-    //                ll << l;
-    //                              
-    //                string lightName = *(*it3)->getName();
-    //                
-    //                mParams.addParam( ll.str()+"Xoffset" , &(*it3)->getPosOffset()->x, "label=`XOffset' group="+lightName+ll.str());    
-    //                mParams.addParam( ll.str()+"Yoffset" , &(*it3)->getPosOffset()->y, "label=`XOffset' group="+lightName+ll.str() );    
-    //                // mParams.addParam( "AdressOffset" , (*it3)->getAdressOffset(), "group="+lightName);    
-    //                mParams.setOptions( lightName+ll.str() , " group="+groupName+gg.str()+" opened=false");
-    //               
-    //                
-    //                l++;
-               // }
-//                
-//                g++;
-//            }
-//
-//            c++;
-//    
-//    }
-//
-    
-    
 }
 
 
