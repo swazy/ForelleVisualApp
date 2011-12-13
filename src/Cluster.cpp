@@ -39,9 +39,13 @@ Cluster::Cluster(const string &name, int u){
 vector<GroupRef>* Cluster::getGroups(){
     return &groups;
 }
-Boolean Cluster::getAdded(){
+bool Cluster::getAdded(){
     return alreadyAdded;
 }
+void Cluster::notAdded(){
+    alreadyAdded = false;
+}
+
 void Cluster::added(){
     alreadyAdded = true;
 }
@@ -172,7 +176,9 @@ void Cluster::updateAndDrawCluster(Surface &surface, Vec2i imagePosOffset, int s
     vector<GroupRef>::iterator it;    
     for(it = groups.begin(); it < groups.end(); it++){
         
-       
+        gl::color(0.0f, 0.0f, 0.0f);
+        gl::drawStrokedCircle( (getPos()->xy()+(*it)->getPosOffset()->xy())*scale+imagePosOffset, 4.0f);
+
         vector<LightRef> *lights = (*it)->getLights();
         vector<LightRef>::iterator it2;
         
@@ -187,21 +193,26 @@ void Cluster::updateAndDrawCluster(Surface &surface, Vec2i imagePosOffset, int s
                 Vec2i pos = getPos()->xy() + (*it)->getPosOffset()->xy() + (*it2)->getPosOffset()->xy() + (*it3)->getPosOffset()->xy();
                 // get the color of the pixel at pos
                 ColorA8u pixel = surface.getPixel(pos.xy());
-                console() << "pixelvalue= " <<(int) surface.getPixel(Vec2i(10,10)).r << endl;
+                //   console() << "pixelvalue= " <<(int) surface.getPixel(Vec2i(10,10)).r << endl;
                 try {
                                 
                     switch (*(*it3)->getSource()) {
                         case 'R':
                             (*it3)->setValue(pixel.r);
+                            gl::color(1.0f, 0.0f, 0.0f);
                             break; 
                         case 'G':
                             (*it3)->setValue(pixel.g);
+                            gl::color(0.0f, 1.0f, 0.0f);
+
                             break; 
                         case 'B':
                             (*it3)->setValue(pixel.b);
+                            gl::color(0.0f, 0.0f, 1.0f);
                             break;
                         case 'A':
-                            (*it3)->setValue(pixel.a);
+                            (*it3)->setValue(0);
+                            gl::color(1.0f, 1.0f, 1.0f);
                             break;
                             
                         default:
@@ -214,7 +225,6 @@ void Cluster::updateAndDrawCluster(Surface &surface, Vec2i imagePosOffset, int s
 
                 //draw each channel 
                 // when resize syphone image draw circles on the rigth position
-                gl::color(0.0f, 1.0f, 0.0f);
                 gl::drawSolidCircle((pos.xy()*scale)+imagePosOffset, 4.0f);
                 gl::color(1.0f, 1.0f, 1.0f);
                          
@@ -226,7 +236,7 @@ void Cluster::updateAndDrawCluster(Surface &surface, Vec2i imagePosOffset, int s
     
 }
 
-void Cluster::getChannelData(uint8_t *data){
+void Cluster::getChannelData( uint8_t *data){
     
     vector<GroupRef>::iterator it;
     int channel = 0;

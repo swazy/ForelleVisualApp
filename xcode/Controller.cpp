@@ -33,16 +33,33 @@ void Controller::updateAndDrawClusters(vector<ClusterRef> &clusters, Surface &su
     
     
 }
-void Controller::getData(vector<ClusterRef> &clusters, uint8_t *data){
+void Controller::barRefresh(vector<ClusterRef> &clusters){
+    
+    vector<ClusterRef>::iterator it;
+    
+    for (it = clusters.begin(); it < clusters.end(); it++) {
+        (*it)->notAdded();   
+    }
+    
+    
+}
+void Controller::getData(vector<ClusterRef> &clusters, uint8_t *data1, uint8_t *data2){
     
     vector<ClusterRef>::iterator it;
     
     for (it = clusters.begin(); it < clusters.end(); it++) {
         
-        (*it)->getChannelData(data);        
-    }
-    
-    
+        // cinder::app::console() << "universe  " << *(*it)->getUniverse() << endl;
+
+        if (*(*it)->getUniverse() == 0) {
+            (*it)->getChannelData(data1);  
+            //  cinder::app::console() << "asdasdasd" << endl;
+            
+        }else  if (*(*it)->getUniverse() == 1) {
+            (*it)->getChannelData(data2);        
+            
+        }
+    }  
 }
 void Controller::changeSelectedCluster(vector<ClusterRef> &clusters, vector<ClusterRef>::iterator &selectedCluster){
     

@@ -48,11 +48,12 @@ int LightChannel::getValue(){
 string* LightChannel::getName(){
     return &name;
 }
-char* LightChannel::getSource(){
-    char * buffer = new char[source.length()];
-    strcpy(buffer,source.c_str());
+const char* LightChannel::getSource(){
+    // char * buffer = new char[source.length()];
+    //strcpy(buffer,source.c_str());
     
-    return &buffer[0];
+    //return &buffer[0];
+    return source.c_str();
 }
 
 string* LightChannel::getSourceAsString(){

@@ -121,7 +121,7 @@ void XmlParser::saveCurrent(vector<ClusterRef> &source ){
           
             XmlTree groupNode( "group", "" );
             groupNode.setAttribute("name", *(*groupIter)->getName());
-            groupNode.setAttribute("address", (*groupIter)->getAdressOffset());
+            groupNode.setAttribute("address", *(*groupIter)->getAdressOffset());
             groupNode.setAttribute("xo", (*groupIter)->getPosOffset()->x);
             groupNode.setAttribute("yo",(*groupIter)->getPosOffset()->y);
             groupNode.setAttribute("zo", (*groupIter)->getPosOffset()->z);
@@ -132,7 +132,7 @@ void XmlParser::saveCurrent(vector<ClusterRef> &source ){
                     
                 XmlTree lightNode( "light", "" );
                 lightNode.setAttribute("name", *(*lightIter)->getName());
-                lightNode.setAttribute("address", (*lightIter)->getAdressOffset());
+                lightNode.setAttribute("address", *(*lightIter)->getAdressOffset());
                 lightNode.setAttribute("xo", (*lightIter)->getPosOffset()->x);
                 lightNode.setAttribute("yo",(*lightIter)->getPosOffset()->y);
                 lightNode.setAttribute("zo", (*lightIter)->getPosOffset()->z);
@@ -187,7 +187,7 @@ void XmlParser::loadScene(vector<ClusterRef> &destination){
             int y = clusterIter->getAttributeValue<int>("y");
             int z = clusterIter->getAttributeValue<int>("z");
             int adress = clusterIter->getAttributeValue<int>("address");
-            
+            console() << adress << endl;
             cluster->setPos(  Vec3i(x,y,z));
             cluster->setStartAdress(adress);
             
@@ -233,12 +233,12 @@ void XmlParser::loadScene(vector<ClusterRef> &destination){
                 cluster->addGroup(group);
             }
         
-            if(!destination.empty()){
-            
-                int usedChannels = *(*destination.back()).getStartAdress() + (*destination.back()).getUsedChannels();
-                cluster->setStartAdress(usedChannels);
-            
-            }
+//            if(!destination.empty()){
+//            
+//                int usedChannels = *(*destination.back()).getStartAdress() + (*destination.back()).getUsedChannels();
+//                cluster->setStartAdress(usedChannels);
+//            
+//            }
             destination.push_back(ClusterRef(cluster));
             
             // delete clusteR?

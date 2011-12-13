@@ -45,8 +45,9 @@ public:
     void moveDown(int y);
     void moveLeft(int x);
     void moveRight(int x);
-    Boolean getAdded();
+    bool getAdded();
     void added();
+    void notAdded();
     int* getUniverse();
     void setUniverse(int u)throw(InvalidValueException);
     

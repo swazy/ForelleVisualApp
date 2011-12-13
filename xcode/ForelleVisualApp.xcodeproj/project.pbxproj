@@ -132,7 +132,7 @@
 		FFB89F2214865D590029BF84 /* Cluster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cluster.cpp; path = ../src/Cluster.cpp; sourceTree = "<group>"; };
 		FFB89F2314865D590029BF84 /* Group.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Group.cpp; path = ../src/Group.cpp; sourceTree = "<group>"; };
 		FFB89F2414865D590029BF84 /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Light.cpp; path = ../src/Light.cpp; sourceTree = "<group>"; };
-		FFE86ACC148FD533007D96F5 /* SClient.h */ = {isa = PBXFileReference; fileEncoding = 4; name = SClient.h; path = ../Header/SClient.h; sourceTree = "<group>"; };
+		FFE86ACC148FD533007D96F5 /* SClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SClient.h; path = ../Header/SClient.h; sourceTree = "<group>"; };
 		FFE86ACE148FDD69007D96F5 /* SClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SClient.cpp; path = ../src/SClient.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -443,8 +443,7 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/blocks/Syphon/lib\"",
-					"\"$(SRCROOT)/../../syphon-implementations-read-only/Syphon Implementations/Cinder/ciSyphon/blocks/Syphon/lib\"",
+					"\"$(SRCROOT)/../../../../../syphon-implementations-read-only/Syphon Implementations/Cinder/ciSyphon/blocks/Syphon/lib\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
@@ -473,8 +472,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/blocks/Syphon/lib\"",
-					"\"$(SRCROOT)/../../syphon-implementations-read-only/Syphon Implementations/Cinder/ciSyphon/blocks/Syphon/lib\"",
+					"\"$(SRCROOT)/../../../../../syphon-implementations-read-only/Syphon Implementations/Cinder/ciSyphon/blocks/Syphon/lib\"",
 				);
 				GCC_FAST_MATH = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;

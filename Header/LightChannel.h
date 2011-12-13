@@ -28,7 +28,7 @@ public:
     LightChannel();
     LightChannel( const string &name,  char source)throw (InvalidSourceException);
     int getValue();
-    char* getSource();
+    const char* getSource();
     string* getSourceAsString();
     void setValue(int value)throw(InvalidValueException);
     void setSource( const char &source)throw(InvalidSourceException);

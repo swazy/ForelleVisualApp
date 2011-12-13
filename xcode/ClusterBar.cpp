@@ -32,12 +32,12 @@ void  ClusterBar::loadParametersFromCluster( ClusterRef cluster){
     stringstream cc;
     
     cc << getElapsedSeconds();
-    console() << cc.str() << endl;
+    //console() << cc.str() << endl;
     mParams.addParam( "" , cluster->getName(), "label=`Name` group="+*cluster->getName()+cc.str() );
     mParams.addParam( "" , &cluster->getPos()->x, "label=`X` group="+*cluster->getName()+cc.str() );	
     mParams.addParam( "" , &cluster->getPos()->y, "label=`Y` group="+*cluster->getName()+cc.str());
     mParams.addParam( "" , cluster->getStartAdress(), "label=`StartAdress` group="+*cluster->getName()+cc.str());    
-    mParams.addParam( "" , cluster->getUniverse(), "label=`Universe` group="+*cluster->getName()+cc.str() ); 
+    mParams.addParam( "" , cluster->getUniverse(), "label=`Universe` min=0 max=4 step=1 group="+*cluster->getName()+cc.str() ); 
     mParams.setOptions( *cluster->getName()+cc.str() , "label=`" +*cluster->getName() +"` "+ "opened=false" );
     cluster->added();
     cluster->setId( (*cluster->getName())+cc.str());
@@ -102,11 +102,11 @@ void ClusterBar::loadParameters(vector<ClusterRef> &clusters){
     
     vector<ClusterRef>::iterator it;
     for (it = clusters.begin(); it < clusters.end(); it++) {
-        if((*it)->getAdded())
-            console() <<"true" << endl;
-        else
-            console() <<"false" << endl;
-        
+//        if((*it)->getAdded())
+//            console() <<"true" << endl;
+//        else
+//            console() <<"false" << endl;
+//        
         if((*it)->getAdded())
             continue;
         

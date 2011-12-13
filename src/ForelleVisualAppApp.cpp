@@ -26,13 +26,14 @@ class ForelleVisualAppApp : public AppBasic {
 	void draw();
     void prepareSettings( Settings *settings );
     void keyDown( KeyEvent event );
+    void refreshClusterBar();
 
     // store our clusters 
     vector<ClusterRef> clusters;
    
     // array for the data of the 512 DMX channels
-    uint8_t data[512];
-    
+    //uint8_t data[512];
+    uint8_t data1[512],data2[512];
     //Artnet node where we send our data
     CinderArtnet node;
     
@@ -42,14 +43,20 @@ class ForelleVisualAppApp : public AppBasic {
     
     Surface surface;	
     
-    Boolean readPixels;
-    Boolean sendData;
+    bool readPixels;
+    bool sendData;
+    bool drawGrid;
+    bool updateCluster;
+    bool allOn;
+    bool allOff;
 
     //selected cluster
     vector<ClusterRef>::iterator selectedCluster;
     
     // ClusterBar which shows all added Clusters
     ClusterBar clusterBar;
+    
+    params::InterfaceGl menueBar;
     
     //Controller to manage Clusters
     Controller controller;
@@ -75,15 +82,35 @@ void ForelleVisualAppApp::setup()
     // Setup the parameters
     clusterBar =  ClusterBar( "Cluster Window", Vec2i( 200, 400 ) );
 
+    //Setup menueBar
+    
+    menueBar = params::InterfaceGl( "Menue Window", Vec2i(200, 400 ) );
+    menueBar.addParam("Read Pixel" , &readPixels, "");
+    menueBar.addParam("Send Data" , &sendData,"");
+    menueBar.addParam("Draw Grid" , &drawGrid,"");
+    menueBar.addParam("Update Cluster" , &updateCluster,"");
+    menueBar.addSeparator();	
+    menueBar.addButton( "Refresh ClusterBar", std::bind( &ForelleVisualAppApp::refreshClusterBar, this ) );
+    menueBar.addSeparator();	
+    menueBar.addParam("All On" , &allOn,"");
+    menueBar.addParam("All Off" , &allOff,"");
+  
+    
     //othe way to initialsie with 0, and don´t have to update ??
     for (int i=0; i < Const::MAX_DMX_CHANNELS ; i++) {
-        data[i]= 0;
+        data1[i]= 0;
+        data2[i]= 0;
         
     }
 
     //setup boolean variables
     readPixels = true;
     sendData  = true;
+    drawGrid = true;
+    updateCluster = true;
+    allOn = false;
+    allOff = false;
+    
     
     //  parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight.xml");
  //   parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight2.xml");
@@ -100,11 +127,11 @@ void ForelleVisualAppApp::setup()
 
     
     //Setup Artnetnode
-    node = CinderArtnet("Art-Net Test", "LongName", "10.0.2.2");
+    node = CinderArtnet("Art-Net Test", "LongName", "10.0.2.1");
     node.setNodeTypeAsServer();
     node.setSubnetAdress(0);
     node.enableDMXPortAsInputAndSetAdress(0,1);
-   // node.enableDMXPortAsInputAndSetAdress(1, 2);
+    node.enableDMXPortAsInputAndSetAdress(1, 2);
     node.printConfig();
     node.startNode();
     
@@ -115,7 +142,15 @@ void ForelleVisualAppApp::setup()
 
 
 }
+void ForelleVisualAppApp::refreshClusterBar()
+{
+    
+    clusterBar.removeAllVar();
+    controller.barRefresh(clusters);
+    clusterBar.loadParameters(clusters);
 
+        
+}
 void ForelleVisualAppApp::mouseDown( MouseEvent event )
 {
 }
@@ -137,9 +172,8 @@ void ForelleVisualAppApp::keyDown( KeyEvent event )
         controller.changeSelectedCluster(clusters, selectedCluster);
     }    
     else if( event.getCode() == 'a' ) {
-        
         //TODO catch exception here, or other way to point an iterator
-        parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight.xml");
+        parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/patrickfuerst/Desktop/DEV/C++/Cinder/ForelleVisualApp/Templates/grosserFloor2.xml");
     //    mParams =   params::InterfaceGl( "App parameters", Vec2i( 200, 400 ) );
       clusterBar.loadParameters(clusters);
 
@@ -162,7 +196,7 @@ void ForelleVisualAppApp::keyDown( KeyEvent event )
         clusterBar.loadParameters(clusters);
     }else if( event.getCode() == 'c' ) {
         clusters.clear();
-       clusterBar.removeAllVar();
+        clusterBar.removeAllVar();
     } 
     
     if(event.getCode() == app::KeyEvent::KEY_ESCAPE)
@@ -177,7 +211,7 @@ void ForelleVisualAppApp::keyDown( KeyEvent event )
         pos.x -=10;
     if(event.getCode() == '6')
         pos.x +=10;
-    if(event.getCode() == app::KeyEvent::KEY_KP_PLUS ){
+    if(event.getCode() == app::KeyEvent::KEY_p){
         scale++;
     }
     if(event.getCode() == app::KeyEvent::KEY_m){
@@ -191,7 +225,10 @@ void ForelleVisualAppApp::update()
 {    
     //othe way to initialsie with 0, and don´t have to update ??
     for (int i=0; i < Const::MAX_DMX_CHANNELS ; i++) {
-        data[i]=0;
+        data1[i]= 0;
+        data2[i]= 0;
+        
+
 
     }
     
@@ -206,38 +243,65 @@ void ForelleVisualAppApp::draw()
   	
     
     
-   // if( surface)
-        //update our Client
-        // stick together  with draw;
-        client.update();
-        //draw the Image from the client
-        gl::draw( *client.getTexture(), Rectf(pos.x,pos.y,pos.x+(60*scale),pos.y+(60*scale)));
+    //update our Client
+    // stick together  with draw;
+    client.update();
+    
+    //draw the Image from the client
+    gl::draw( *client.getTexture(), Rectf(pos.x,pos.y,pos.x+(60*scale),pos.y+(60*scale)));
+    
+    if(allOn == true || allOff == true){
+        readPixels = false;
+    }
+    
+    if (drawGrid) {
+
+        // draw Pixel grid
+        gl::color( Colorf(1.0f, 1.0f, 1.0f) );
+        gl::pushMatrices();
+            gl::translate(pos);
+            for(float i=0;i<=60*scale;i+=scale) {
+                gl::drawLine( Vec2f(i,  0), Vec2f(i,  60*scale) );
+                gl::drawLine( Vec2f(0,  i), Vec2f(60*scale,  i) );
+            }
+        gl::popMatrices();
+        
+    }
     
     
-    // draw Pixel grid
-    gl::color( Colorf(1.0f, 1.0f, 1.0f) );
-    gl::pushMatrices();
-    gl::translate(pos);
-	for(float i=0;i<=60*scale;i+=scale) {
-		gl::drawLine( Vec2f(i,  0), Vec2f(i,  60*scale) );
-		gl::drawLine( Vec2f(0,  i), Vec2f(60*scale,  i) );
-	}
-    gl::popMatrices();
+    if(updateCluster)
+        controller.updateAndDrawClusters(clusters, *client.getSurface(), pos, scale);
 
+    if(readPixels)
+        controller.getData(clusters,data1,data2);
+    
+    
+    
+    if(allOn){
+        for (int i=0; i < Const::MAX_DMX_CHANNELS ; i++) {
+            data1[i]= 255;
+            data2[i]= 255;
+            //allOn = false;
 
+        }
 
-   
-    //   if(readPixels)
-    controller.updateAndDrawClusters(clusters, *client.getSurface(), pos, scale);
-    controller.getData(clusters,data);
-       
-    //  if(sendData)
-        node.sendDataAtPort(data, 0);
+    }
+    if (allOff) {
+        for (int i=0; i < Const::MAX_DMX_CHANNELS ; i++) {
+            data1[i]= 0;
+            data2[i]= 0;
+            // allOff = false;
+        }
+    }
       
+    if(sendData){
+        node.sendDataAtPort(data1, 0);
+        node.sendDataAtPort(data2, 1);
+    }
+    
     // Draw the interface
 	clusterBar.draw();
-	
-
+	menueBar.draw();
 
 }
 

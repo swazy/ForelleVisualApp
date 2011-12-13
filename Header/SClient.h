@@ -28,6 +28,7 @@ private:
     
     int fboWidth, fboHeight;
     
+    
 public:
     SClient();
     void setup(Vec2i size);
