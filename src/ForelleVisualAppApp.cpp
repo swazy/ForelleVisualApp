@@ -424,6 +424,21 @@ void ForelleVisualAppApp::draw()
 }
 void ForelleVisualAppApp::shutdown(){
     
+    
+    // on shutdown all off
+    for (int i=0; i < Const::MAX_DMX_CHANNELS ; i++) {
+        data1[i]= 0;
+        data2[i]= 0;
+        data3[i]= 0;
+        data4[i]= 0;
+        
+    }
+
+    node.sendDataAtPort(data1, 0);
+    node.sendDataAtPort(data2, 1);
+    node.sendDataAtPort(data3, 2);
+    node.sendDataAtPort(data4, 3);
+
     saveSettings();
 }
 
