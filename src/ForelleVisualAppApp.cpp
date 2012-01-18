@@ -27,15 +27,29 @@ class ForelleVisualAppApp : public AppBasic {
     void prepareSettings( Settings *settings );
     void keyDown( KeyEvent event );
     void refreshClusterBar();
-
+    void saveAsCluster();
+    void saveAsScene();
+    void saveAsStandartScene();
+    void loadScene();
+    void loadClusterToUniverse();
+    void clearScene();
+    void showClusterBar();
+    void deleteCluster();
+    void saveSettings();
+    void loadSettings();
+    void shutdown();
+    void allOn();
+    void allOff();
     // store our clusters 
     vector<ClusterRef> clusters;
    
     // array for the data of the 512 DMX channels
     //uint8_t data[512];
-    uint8_t data1[512],data2[512];
+    uint8_t data1[512],data2[512],data3[512],data4[512];
+   
     //Artnet node where we send our data
     CinderArtnet node;
+    string ipAdress;
     
     // xmlparser so read and write templates and scenes
     XmlParser parser;
@@ -47,8 +61,12 @@ class ForelleVisualAppApp : public AppBasic {
     bool sendData;
     bool drawGrid;
     bool updateCluster;
-    bool allOn;
-    bool allOff;
+    bool bAllOn, bAllOff;
+    bool bShowClusterBar;
+    bool selectedClusterOn;
+    
+    // Universe where we load our Cluster templates
+    int templateUniverse;
 
     //selected cluster
     vector<ClusterRef>::iterator selectedCluster;
@@ -67,6 +85,11 @@ class ForelleVisualAppApp : public AppBasic {
     // position and size of the syphone image
     Vec2i pos;
     int scale;
+    
+    
+    // our Logo
+    gl::Texture		mLogo;	
+
    
     
 };
@@ -79,28 +102,46 @@ void ForelleVisualAppApp::prepareSettings( Settings *settings )
 }
 void ForelleVisualAppApp::setup()
 {
+    
+    loadSettings();
+    
     // Setup the parameters
     clusterBar =  ClusterBar( "Cluster Window", Vec2i( 200, 400 ) );
 
     //Setup menueBar
     
-    menueBar = params::InterfaceGl( "Menue Window", Vec2i(200, 400 ) );
-    menueBar.addParam("Read Pixel" , &readPixels, "");
-    menueBar.addParam("Send Data" , &sendData,"");
+    menueBar = params::InterfaceGl( "Menue Window", Vec2i(300, 400 ), ColorA(0.5,0.5,0.5,0.1) );
+    menueBar.setOptions("", "text=light position='724 0' valueswidth=100 contained=true");
+    menueBar.addButton("Clear Scene ", std::bind( &ForelleVisualAppApp::clearScene, this ) );
+    menueBar.addButton("Delete Selected Cluster", std::bind( &ForelleVisualAppApp::deleteCluster, this ) );
     menueBar.addParam("Draw Grid" , &drawGrid,"");
-    menueBar.addParam("Update Cluster" , &updateCluster,"");
+    menueBar.addParam("Read Pixel" , &readPixels, "true=reading false='not reading'");
+    menueBar.addButton("Refresh ClusterBar", std::bind( &ForelleVisualAppApp::refreshClusterBar, this ) );
+    menueBar.addParam("Update Cluster" , &updateCluster,"true=updating false='not updating'");
+    menueBar.addParam("Send only Selected Cluster" , &selectedClusterOn,"");
+
+
     menueBar.addSeparator();	
-    menueBar.addButton( "Refresh ClusterBar", std::bind( &ForelleVisualAppApp::refreshClusterBar, this ) );
-    menueBar.addSeparator();	
-    menueBar.addParam("All On" , &allOn,"");
-    menueBar.addParam("All Off" , &allOff,"");
-  
+    menueBar.addButton("Load Scene ", std::bind( &ForelleVisualAppApp::loadScene, this ) );
+    menueBar.addButton("Load Cluster to Universe ", std::bind( &ForelleVisualAppApp::loadClusterToUniverse, this ) );
+    menueBar.addParam("    Load to Universe" , &templateUniverse,"min=0 max=3 step=1");
+    menueBar.addButton("Save as Cluster", std::bind( &ForelleVisualAppApp::saveAsCluster, this ) );
+    menueBar.addButton("Save as Scene", std::bind( &ForelleVisualAppApp::saveAsScene, this ) );
+    menueBar.addButton("Save as Standart Scene", std::bind( &ForelleVisualAppApp::saveAsStandartScene, this ) );
+    menueBar.addParam("Send Data" , &sendData,"true=sending false='not sending'");
     
-    //othe way to initialsie with 0, and don´t have to update ??
+    menueBar.addSeparator();	
+    menueBar.addSeparator();	
+    menueBar.addParam("All On" , &bAllOn,"");
+    menueBar.addParam("All Off" , &bAllOff,"");
+
+    menueBar.addButton("Show ClusterBar", std::bind( &ForelleVisualAppApp::showClusterBar, this ) );
+    menueBar.show(false);
     for (int i=0; i < Const::MAX_DMX_CHANNELS ; i++) {
         data1[i]= 0;
         data2[i]= 0;
-        
+        data3[i]= 0;
+        data4[i]= 0;
     }
 
     //setup boolean variables
@@ -108,55 +149,128 @@ void ForelleVisualAppApp::setup()
     sendData  = true;
     drawGrid = true;
     updateCluster = true;
-    allOn = false;
-    allOff = false;
+    bAllOn = false;
+    bAllOff = false;
+    bShowClusterBar = false;
+    selectedClusterOn = false;
     
-    
-    //  parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight.xml");
- //   parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/pfu/Desktop/ForelleVisualApp/Templates/eurolight2.xml");
+    //default load out templates to universe 0
+    templateUniverse = 0;
  
-   // surface = Surface( loadImage(loadResource(RES_IMAGE) ));
-
+  
     // set our pointer to the last added cluster
     if(!clusters.empty())
         selectedCluster = clusters.end()-1;
          
 
     controller.printClusters(clusters);
-    // loadParameters(clusters, mParams);
+
 
     
     //Setup Artnetnode
-    node = CinderArtnet("Art-Net Test", "LongName", "10.0.2.1");
+    
+    if(ipAdress.empty() )
+        ipAdress = "10.0.2.1";  //if it isn´t initalised already
+    node = CinderArtnet("Art-Net Test", "LongName", ipAdress);
     node.setNodeTypeAsServer();
     node.setSubnetAdress(0);
     node.enableDMXPortAsInputAndSetAdress(0,1);
     node.enableDMXPortAsInputAndSetAdress(1, 2);
+    node.enableDMXPortAsInputAndSetAdress(2, 3);
+    node.enableDMXPortAsInputAndSetAdress(3, 4);
     node.printConfig();
     node.startNode();
     
     // initalize start our Syphone Client
     client.setup(Vec2i(60,60));
     pos = Vec2i(0,0);
-    scale = 1;
-
+    scale = 9;
+     
+    
+    
+    
+ 
+    mLogo = gl::Texture( loadImage( loadResource(RES_LOGO) ) );
+        
 
 }
 void ForelleVisualAppApp::refreshClusterBar()
-{
-    
+{    
     clusterBar.removeAllVar();
     controller.barRefresh(clusters);
+    clusterBar.loadParameters(clusters);    
+}
+void ForelleVisualAppApp::saveAsCluster()
+{
+    parser.saveAsCluster(clusters);        
+}
+void ForelleVisualAppApp::saveAsScene()
+{
+    parser.saveAsScene(clusters);    
+}
+void ForelleVisualAppApp::saveAsStandartScene()
+{
+    parser.saveAsScene(clusters,getResourcePath()+"/standartScene");    
+}
+void ForelleVisualAppApp::loadScene()
+{
+    parser.loadScene(clusters);
+    selectedCluster = clusters.end()-1;
+    clusterBar.loadParameters(clusters);    
+}
+void ForelleVisualAppApp::loadClusterToUniverse()
+{
+    //TODO catch exception here, or other way to point an iterator
+    parser.loadTemplateClusterToUniverse(clusters, templateUniverse );
     clusterBar.loadParameters(clusters);
+    
+    // if this is the first element in the vector, set Iterator new
+    // if(clusters.size() == 1)
+    selectedCluster = clusters.end()-1;
+    
+}
+void ForelleVisualAppApp::clearScene()
+{
+    clusters.clear();
+    clusterBar.removeAllVar();
+}
 
+
+void ForelleVisualAppApp::showClusterBar()
+{
+    bShowClusterBar = !bShowClusterBar;
+    clusterBar.isVisible(bShowClusterBar);
+    if(bShowClusterBar)
+        menueBar.setOptions("Show ClusterBar" , "label='Hide ClusterBar'");
+    else
+        menueBar.setOptions("Show ClusterBar" , "label='Show ClusterBar'");
+
+}
+void ForelleVisualAppApp::deleteCluster()
+{    
+    if(!clusters.empty()){
         
+        clusterBar.removeVar((*selectedCluster)->getId());
+        controller.deleteSelectedCluster(clusters, selectedCluster);
+    }
 }
 void ForelleVisualAppApp::mouseDown( MouseEvent event )
 {
 }
 void ForelleVisualAppApp::keyDown( KeyEvent event )
 {
-    if( event.getCode() == app::KeyEvent::KEY_UP && !clusters.empty() ) {
+   
+
+
+    if( event.isAccelDown() &&  event.getCode()== app::KeyEvent::KEY_n  ) {
+        
+        if(menueBar.isVisible())
+            menueBar.show(false);
+        else
+            menueBar.show(true);
+
+    }
+	else if( event.getCode() == app::KeyEvent::KEY_UP && !clusters.empty() ) {
 		(*selectedCluster)->moveUp(1);
 	}
 	else if( event.getCode() == app::KeyEvent::KEY_DOWN && !clusters.empty()) {
@@ -171,34 +285,7 @@ void ForelleVisualAppApp::keyDown( KeyEvent event )
     else if( event.getCode() == app::KeyEvent::KEY_TAB ) {
         controller.changeSelectedCluster(clusters, selectedCluster);
     }    
-    else if( event.getCode() == 'a' ) {
-        //TODO catch exception here, or other way to point an iterator
-        parser.loadTemplateClusterToUniverse(clusters, 0,"/Users/patrickfuerst/Desktop/DEV/C++/Cinder/ForelleVisualApp/Templates/grosserFloor2.xml");
-    //    mParams =   params::InterfaceGl( "App parameters", Vec2i( 200, 400 ) );
-      clusterBar.loadParameters(clusters);
-
-        // if this is the first element in the vector, set Iterator new
-       // if(clusters.size() == 1)
-            selectedCluster = clusters.end()-1;
-    } else if( event.getCode() == 'd' && !clusters.empty()  ) {
-        
-        clusterBar.removeVar((*selectedCluster)->getId());
-        controller.deleteSelectedCluster(clusters, selectedCluster);
-      //  loadParameters(clusters, mParams); 
-   
-
-    }else if( event.getCode() == 's' ) {
-        parser.saveCurrent(clusters);
-
-    }else if( event.getCode() == 'l' ) {
-        parser.loadScene(clusters);
-        selectedCluster = clusters.end()-1;
-        clusterBar.loadParameters(clusters);
-    }else if( event.getCode() == 'c' ) {
-        clusters.clear();
-        clusterBar.removeAllVar();
-    } 
-    
+    else  
     if(event.getCode() == app::KeyEvent::KEY_ESCAPE)
         setFullScreen(false);
 	if(event.getCode() == 'f')
@@ -227,13 +314,12 @@ void ForelleVisualAppApp::update()
     for (int i=0; i < Const::MAX_DMX_CHANNELS ; i++) {
         data1[i]= 0;
         data2[i]= 0;
-        
-
+        data3[i]= 0;
+        data4[i]= 0;
 
     }
     
-    
-  
+     
 }
 
 void ForelleVisualAppApp::draw()
@@ -242,17 +328,17 @@ void ForelleVisualAppApp::draw()
 	gl::clear( Color(0, 0,0 ) ); 
   	
     
+    // draw our logo 
+    gl::draw(mLogo, Vec2i(0, getWindowHeight()-mLogo.getHeight() ) );
     
     //update our Client
     // stick together  with draw;
     client.update();
-    
+    //gl::color( Colorf(0.0f, 0.0f, 0.0f) );
     //draw the Image from the client
     gl::draw( *client.getTexture(), Rectf(pos.x,pos.y,pos.x+(60*scale),pos.y+(60*scale)));
     
-    if(allOn == true || allOff == true){
-        readPixels = false;
-    }
+  
     
     if (drawGrid) {
 
@@ -268,43 +354,117 @@ void ForelleVisualAppApp::draw()
         
     }
     
-    
     if(updateCluster)
         controller.updateAndDrawClusters(clusters, *client.getSurface(), pos, scale);
-
+    
     if(readPixels)
-        controller.getData(clusters,data1,data2);
+        controller.getData(clusters,data1,data2,data3,data4);
     
+ 
     
-    
-    if(allOn){
+    if(bAllOn){
+        
         for (int i=0; i < Const::MAX_DMX_CHANNELS ; i++) {
             data1[i]= 255;
             data2[i]= 255;
-            //allOn = false;
-
+            data3[i]= 255;
+            data4[i]= 255;
+            
         }
-
-    }
-    if (allOff) {
+        
+    }else if(bAllOff){
+        
         for (int i=0; i < Const::MAX_DMX_CHANNELS ; i++) {
             data1[i]= 0;
             data2[i]= 0;
-            // allOff = false;
+            data3[i]= 0;
+            data4[i]= 0;
+            
         }
+        
     }
-      
+
+    if(selectedClusterOn && !clusters.empty() ){
+        for (int i=0; i < Const::MAX_DMX_CHANNELS ; i++) {
+            data1[i]= 0;
+            data2[i]= 0;
+            data3[i]= 0;
+            data4[i]= 0;
+            
+            int universe = *(*selectedCluster)->getUniverse();
+            
+            if (universe == 0) {
+                (*selectedCluster)->getChannelData(data1);
+            }else if (universe == 1) {
+                (*selectedCluster)->getChannelData(data2);
+            }else if (universe == 2) {
+                (*selectedCluster)->getChannelData(data3);
+            }else if (universe == 3) {
+                (*selectedCluster)->getChannelData(data4);
+            }
+
+            
+        }
+        
+    }
+    
     if(sendData){
         node.sendDataAtPort(data1, 0);
         node.sendDataAtPort(data2, 1);
+        node.sendDataAtPort(data3, 2);
+        node.sendDataAtPort(data4, 3);
     }
+    
+
     
     // Draw the interface
 	clusterBar.draw();
 	menueBar.draw();
 
 }
+void ForelleVisualAppApp::shutdown(){
+    
+    saveSettings();
+}
 
+
+void ForelleVisualAppApp::saveSettings(){
+    
+//    XmlTree settingsNode( "settings", "" );
+//    
+//    XmlTree artNetNode( "artNet", "" );
+//    artNetNode.setAttribute("ipAdress", ipAdress);
+//    
+//    settingsNode.push_back(artNetNode);
+//    try {
+//        
+//            settingsNode.write( writeFile( "../settings.xml" ) );
+//        
+//    }
+//    catch( ... ) {
+//        console() << "unable to save file" << std::endl;
+//    }		
+//
+        
+}
+void ForelleVisualAppApp::loadSettings(){
+    
+    try{
+    const XmlTree xml( loadFile( "settings.xml"  ) );
+    
+    
+    ipAdress =  xml.getChild("settings/artNet").getAttributeValue<string>("ipAdress");
+    
+    }catch(StreamExc e){
+        
+        console() << "no settings file" << std::endl;
+
+    }
+    
+    
+    parser.loadScene(clusters, getResourcePath()+"/standartScene.xml");
+    
+}
 
 
 

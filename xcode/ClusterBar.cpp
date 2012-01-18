@@ -16,9 +16,17 @@ ClusterBar::ClusterBar(){}
 ClusterBar::ClusterBar( const string &name, Vec2i pos){
 
     mParams = params::InterfaceGl( name, pos );
+    mParams.hide();
 }
 void ClusterBar::draw(){
     mParams.draw();
+}
+void ClusterBar::isVisible(bool show)
+{
+    if(show)
+        mParams.show();
+    else
+        mParams.hide();
 }
 
 void ClusterBar::removeVar(string* i){

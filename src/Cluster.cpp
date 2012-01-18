@@ -172,12 +172,15 @@ void Cluster::printCluster(){
 } 
 void Cluster::updateAndDrawCluster(Surface &surface, Vec2i imagePosOffset, int scale){
     
+    gl::color(0.0f, 0.0f, 0.0f);
+    gl::drawSolidCircle( (getPos()->xy())*scale+imagePosOffset, 4.0f);
+
  
     vector<GroupRef>::iterator it;    
     for(it = groups.begin(); it < groups.end(); it++){
         
-        gl::color(0.0f, 0.0f, 0.0f);
-        gl::drawStrokedCircle( (getPos()->xy()+(*it)->getPosOffset()->xy())*scale+imagePosOffset, 4.0f);
+        gl::color(1.0f, 1.0f, 1.0f);
+        gl::drawSolidCircle( (getPos()->xy()+(*it)->getPosOffset()->xy())*scale+imagePosOffset, 4.0f);
 
         vector<LightRef> *lights = (*it)->getLights();
         vector<LightRef>::iterator it2;

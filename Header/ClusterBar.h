@@ -30,6 +30,7 @@ public:
     void loadParameters(vector<ClusterRef> &clusters);
     void removeVar(string* i);
     void removeAllVar();
+    void isVisible(bool show);
 
     
     

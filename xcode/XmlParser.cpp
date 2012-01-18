@@ -21,9 +21,10 @@ XmlParser::XmlParser(){
 
 
 
-void XmlParser::loadTemplateClusterToUniverse(vector<ClusterRef> &destination, int universe , const string &source){
+void XmlParser::loadTemplateClusterToUniverse(vector<ClusterRef> &destination, int universe ){
     
-    	
+    string source =  getOpenFilePath( getHomeDirectory() );
+
    
     //catch mal-formed Xml Files
     try {
@@ -82,7 +83,8 @@ void XmlParser::loadTemplateClusterToUniverse(vector<ClusterRef> &destination, i
        
         }
         destination.push_back(ClusterRef(cluster));
-        
+        console() << "Cluster added" << endl;
+
     }catch  (rapidxml::parse_error &e)
     {
         console()<< e.what() << "  RapidXML exception!"<< endl;
@@ -90,14 +92,17 @@ void XmlParser::loadTemplateClusterToUniverse(vector<ClusterRef> &destination, i
         console() << e.what() << "Child not found" <<endl;
     }catch(cinder::XmlTree::ExcAttrNotFound &e){
         console() << e.what() << "Attribute not found" <<endl;
+    }catch(InvalidValueException& e){
+        console() << e.getMessage()  <<endl;
+    }catch(...){
+        console() << "Unable to Load" <<endl;
     }
     
-    console() << "Cluster added" << endl;
 
 }
 
 
-void XmlParser::saveCurrent(vector<ClusterRef> &source ){
+void XmlParser::saveAsScene(vector<ClusterRef> &source, const string path ){
 
     XmlTree sceneNode("scene","");
     
@@ -158,7 +163,7 @@ void XmlParser::saveCurrent(vector<ClusterRef> &source ){
 
     try {
         
-        string path = getSaveFilePath( getHomeDirectory() );
+      
         
         if( ! path.empty() ) {
             sceneNode.write( writeFile( path+".xml" ) );
@@ -169,10 +174,109 @@ void XmlParser::saveCurrent(vector<ClusterRef> &source ){
     }		
     
 }
+void XmlParser::saveAsScene(vector<ClusterRef> &source){
 
+    try {
+        
+        string path = getSaveFilePath( getHomeDirectory() );
+        
+        if( ! path.empty() ) {
+            saveAsScene(source, path);
+        }
+    }
+    catch( ... ) {
+        console() << "unable to get Path" << std::endl;
+    }		
+
+}
+
+void XmlParser::saveAsCluster(vector<ClusterRef> &source ){
+    
+    XmlTree clusterNode( "cluster", "" );
+
+    // Iterate through Clusters
+    for( vector<ClusterRef>::iterator clusterIter = source.begin(); clusterIter != source.end(); ++clusterIter ) {
+        
+        
+        clusterNode.setAttribute("name", *(*clusterIter)->getName());
+        clusterNode.setAttribute("universe", *(*clusterIter)->getUniverse());
+        clusterNode.setAttribute("address", *(*clusterIter)->getStartAdress());
+        clusterNode.setAttribute("x", (*clusterIter)->getPos()->x);
+        clusterNode.setAttribute("y",(*clusterIter)->getPos()->y);
+        clusterNode.setAttribute("z", (*clusterIter)->getPos()->z);
+        
+        
+        vector<GroupRef> *groups = (*clusterIter)->getGroups();
+        // Iterate through Groups
+        for(  vector<GroupRef>::iterator groupIter = groups->begin(); groupIter != groups->end(); ++groupIter ) {
+            
+            XmlTree groupNode( "group", "" );
+            groupNode.setAttribute("name", *(*groupIter)->getName());
+            groupNode.setAttribute("address", *(*groupIter)->getAdressOffset());
+            groupNode.setAttribute("xo", (*groupIter)->getPosOffset()->x);
+            groupNode.setAttribute("yo",(*groupIter)->getPosOffset()->y);
+            groupNode.setAttribute("zo", (*groupIter)->getPosOffset()->z);
+            
+            vector<LightRef> *lights = (*groupIter)->getLights();
+            // Iterate through Lights
+            for( vector<LightRef>::iterator lightIter = lights->begin(); lightIter != lights->end(); ++lightIter ) {
+                
+                XmlTree lightNode( "light", "" );
+                lightNode.setAttribute("name", *(*lightIter)->getName());
+                lightNode.setAttribute("address", *(*lightIter)->getAdressOffset());
+                lightNode.setAttribute("xo", (*lightIter)->getPosOffset()->x);
+                lightNode.setAttribute("yo",(*lightIter)->getPosOffset()->y);
+                lightNode.setAttribute("zo", (*lightIter)->getPosOffset()->z);
+                
+                vector<LightChannelRef> *channels = (*lightIter)->getChannels();
+                // Iterate through Channels
+                for( vector<LightChannelRef>::iterator channelIter = channels->begin(); channelIter != channels->end(); ++channelIter ) {
+                    
+                    XmlTree channelNode( "channel", "" );
+                    channelNode.setAttribute("name", *(*channelIter)->getName());
+                    channelNode.setAttribute("source", *(*channelIter)->getSource());
+                    channelNode.setAttribute("xo", (*channelIter)->getPosOffset()->x);
+                    channelNode.setAttribute("yo",(*channelIter)->getPosOffset()->y);
+                    channelNode.setAttribute("zo", (*channelIter)->getPosOffset()->z);
+                    lightNode.push_back(channelNode);
+                }
+                groupNode.push_back(lightNode);
+            } 
+            clusterNode.push_back(groupNode);
+        }
+    }
+    
+    try {
+        
+        string path = getSaveFilePath( getHomeDirectory() );
+        
+        if( ! path.empty() ) {
+            clusterNode.write( writeFile( path+".xml" ) );
+        }
+    }
+    catch( ... ) {
+        console() << "unable to save file" << std::endl;
+    }		
+    
+}
 void XmlParser::loadScene(vector<ClusterRef> &destination){
+    
+    try {
+        
+        string path = getOpenFilePath( getHomeDirectory() );
+        
+        if( ! path.empty() ) {
+            loadScene(destination, path);
+        }
+    }
+    catch( ... ) {
+        console() << "unable to get Path" << std::endl;
+    }		
 
-    string source =  getOpenFilePath( getHomeDirectory() );
+}
+
+void XmlParser::loadScene(vector<ClusterRef> &destination, const string source){
+
         
     //catch mal-formed Xml Files
     try {
@@ -243,7 +347,9 @@ void XmlParser::loadScene(vector<ClusterRef> &destination){
             
             // delete clusteR?
         }
+        console() << "Cluster added" << endl;
         
+
     }catch  (rapidxml::parse_error &e)
     {
         console()<< e.what() << "  RapidXML exception!"<< endl;
@@ -251,8 +357,9 @@ void XmlParser::loadScene(vector<ClusterRef> &destination){
         console() << e.what() << "Child not found" <<endl;
     }catch(cinder::XmlTree::ExcAttrNotFound &e){
         console() << e.what() << "Attribute not found" <<endl;
+    }catch(...){
+        console() << "Unable to Load Scene" <<endl;
     }
-    
-    console() << "Cluster added" << endl;
 
+    
 }

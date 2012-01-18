@@ -43,7 +43,7 @@ void Controller::barRefresh(vector<ClusterRef> &clusters){
     
     
 }
-void Controller::getData(vector<ClusterRef> &clusters, uint8_t *data1, uint8_t *data2){
+void Controller::getData(vector<ClusterRef> &clusters, uint8_t *data1, uint8_t *data2, uint8_t *data3,uint8_t *data4){
     
     vector<ClusterRef>::iterator it;
     
@@ -58,7 +58,14 @@ void Controller::getData(vector<ClusterRef> &clusters, uint8_t *data1, uint8_t *
         }else  if (*(*it)->getUniverse() == 1) {
             (*it)->getChannelData(data2);        
             
+        }else  if (*(*it)->getUniverse() == 2) {
+            (*it)->getChannelData(data3);        
+            
+        }else  if (*(*it)->getUniverse() == 3) {
+            (*it)->getChannelData(data4);        
+            
         }
+
     }  
 }
 void Controller::changeSelectedCluster(vector<ClusterRef> &clusters, vector<ClusterRef>::iterator &selectedCluster){

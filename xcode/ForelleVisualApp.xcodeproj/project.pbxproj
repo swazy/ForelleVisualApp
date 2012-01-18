@@ -14,7 +14,8 @@
 		00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
 		00BAE65A0E7ED9C10018A608 /* ForelleVisualAppApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00BAE6590E7ED9C10018A608 /* ForelleVisualAppApp.cpp */; };
-		00CCAF15116A9FEE008396D5 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 00CCAF14116A9FEE008396D5 /* CinderApp.icns */; };
+		0D0BA3AA14A263FC001B0C7F /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D0BA3A914A263FC001B0C7F /* logo.png */; };
+		0D4C438714A24F2B00990A78 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0D4C438614A24F2B00990A78 /* CinderApp.icns */; };
 		0D635A46148D7A3500A6C859 /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D635A45148D7A3500A6C859 /* Syphon.framework */; };
 		0D90A883148D605700330454 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D90A87A148D605700330454 /* Syphon.framework */; };
 		0D90A884148D605700330454 /* SyphonNameboundClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D90A87C148D605700330454 /* SyphonNameboundClient.m */; };
@@ -30,7 +31,6 @@
 		FF5E6AAB1487EE84004EC6F0 /* XmlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF5E6AAA1487EE84004EC6F0 /* XmlParser.cpp */; };
 		FF66AE381487C5D400A47EBC /* LightChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF66AE371487C5D400A47EBC /* LightChannel.cpp */; };
 		FF823D79148B9347004EA6BF /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF823D78148B9347004EA6BF /* Controller.cpp */; };
-		FFA26C31148A6C79003798DE /* testbild.png in Resources */ = {isa = PBXBuildFile; fileRef = FFA26C30148A6C79003798DE /* testbild.png */; };
 		FFAA12631486A64E00B81814 /* artnet.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12501486A64E00B81814 /* artnet.Plo */; };
 		FFAA12641486A64E00B81814 /* misc.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12511486A64E00B81814 /* misc.Plo */; };
 		FFAA12651486A64E00B81814 /* network.Plo in Resources */ = {isa = PBXBuildFile; fileRef = FFAA12521486A64E00B81814 /* network.Plo */; };
@@ -71,7 +71,8 @@
 		00B784B10FF439BC000DE1D7 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		00B784B20FF439BC000DE1D7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		00BAE6590E7ED9C10018A608 /* ForelleVisualAppApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ForelleVisualAppApp.cpp; path = ../src/ForelleVisualAppApp.cpp; sourceTree = SOURCE_ROOT; };
-		00CCAF14116A9FEE008396D5 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = SOURCE_ROOT; };
+		0D0BA3A914A263FC001B0C7F /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		0D4C438614A24F2B00990A78 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
 		0D635A45148D7A3500A6C859 /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Syphon.framework; sourceTree = "<group>"; };
 		0D90A87A148D605700330454 /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Syphon.framework; sourceTree = "<group>"; };
 		0D90A87B148D605700330454 /* SyphonNameboundClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyphonNameboundClient.h; sourceTree = "<group>"; };
@@ -104,7 +105,6 @@
 		FF823D78148B9347004EA6BF /* Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Controller.cpp; sourceTree = "<group>"; };
 		FF823D7B148B93C3004EA6BF /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Controller.h; path = ../Header/Controller.h; sourceTree = "<group>"; };
 		FFA26C2A148A2E79003798DE /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
-		FFA26C30148A6C79003798DE /* testbild.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testbild.png; sourceTree = "<group>"; };
 		FFAA12501486A64E00B81814 /* artnet.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artnet.Plo; sourceTree = "<group>"; };
 		FFAA12511486A64E00B81814 /* misc.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = misc.Plo; sourceTree = "<group>"; };
 		FFAA12521486A64E00B81814 /* network.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = network.Plo; sourceTree = "<group>"; };
@@ -288,10 +288,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FFA26C30148A6C79003798DE /* testbild.png */,
+				0D0BA3A914A263FC001B0C7F /* logo.png */,
+				0D4C438614A24F2B00990A78 /* CinderApp.icns */,
 				FFA26C2A148A2E79003798DE /* Resources.h */,
 				8D1107310486CEB800E47090 /* Info.plist */,
-				00CCAF14116A9FEE008396D5 /* CinderApp.icns */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -391,14 +391,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00CCAF15116A9FEE008396D5 /* CinderApp.icns in Resources */,
 				FFAA12631486A64E00B81814 /* artnet.Plo in Resources */,
 				FFAA12641486A64E00B81814 /* misc.Plo in Resources */,
 				FFAA12651486A64E00B81814 /* network.Plo in Resources */,
 				FFAA12661486A64E00B81814 /* receive.Plo in Resources */,
 				FFAA12671486A64E00B81814 /* tod.Plo in Resources */,
 				FFAA12681486A64E00B81814 /* transmit.Plo in Resources */,
-				FFA26C31148A6C79003798DE /* testbild.png in Resources */,
+				0D4C438714A24F2B00990A78 /* CinderApp.icns in Resources */,
+				0D0BA3AA14A263FC001B0C7F /* logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
